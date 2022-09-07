@@ -3,13 +3,14 @@
 // =============================================== */
 // ============> #1- Colors                       */
 
+// // Usage --> .-900 down to fs-200
 @each $color, $shades in $all_colors {
   @each $shade, $value in $shades {
-    .clr-#{$color}-#{$shade} {
+    .text-#{$color}-#{$shade} {
       color: $value;
     }
 
-    .clr-#{$color}-#{$shade} {
+    .bg-#{$color}-#{$shade} {
       background-color: $value;
     }
   }
@@ -39,6 +40,18 @@
 @each $font, $value in $font_weight_map {
   .#{$font} {
     font-weight: $value;
+  }
+}
+// // font family
+@each $font, $value in $font_family_map {
+  .#{$font} {
+    font-family: $value;
+  }
+}
+
+@each $variant, $value in $letter_spc_map {
+  .letter-spc-#{$variant} {
+    letter-spacing: $value;
   }
 }
 
@@ -72,6 +85,12 @@
   display: grid;
 }
 
+.uppercase {
+  text-transform: uppercase;
+}
+.capitalize {
+  text-transform: capitalize;
+}
 @each $size, $value in $breakpoints {
   @media screen and (min-width: $value) {
     .#{$size}block {
@@ -139,6 +158,9 @@
       }
     }
   }
+}
+.flex-wrap {
+  flex-wrap: wrap;
 }
 
 // // Grid

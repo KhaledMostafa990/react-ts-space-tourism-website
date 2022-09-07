@@ -26,7 +26,7 @@ describe('The App Pages/Routers', () => {
     });
 
     await userevent.click(designPage);
-    expect(screen.getByText(/welcome to design system/i)).toBeInTheDocument();
+    expect(screen.getByText(/design system/i)).toBeInTheDocument();
 
     await userevent.click(homePage);
     expect(screen.getByText(/welcome to home/gi)).toBeInTheDocument();

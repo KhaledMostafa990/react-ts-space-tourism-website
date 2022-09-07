@@ -1,16 +1,21 @@
-import { Routes, Route, Navigate, Link } from 'react-router-dom';
+import DesignSystemPage from 'components/pages/DesignSystemPage';
+import { Routes, Route, Navigate, Link, useLocation } from 'react-router-dom';
 import './sass/main.scss';
 
 function App() {
+  const { pathname } = useLocation();
+
   return (
     <div className='App'>
       <ul className='flex'>
         <li>
-          <Link to='/'>Home</Link>
+          <Link to='/home'>Home</Link>
         </li>
-        <li>
-          <Link to='/designsystem'>Design System</Link>
-        </li>
+        {pathname !== '/designsystem' && (
+          <li>
+            <Link to='/designsystem'>Design System</Link>
+          </li>
+        )}
         <li>
           <Link to='/destinations'>Destinations</Link>
         </li>
@@ -25,10 +30,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Navigate to='/home' replace={true} />} />
         <Route path='/home' element={<div>welcome to home</div>} />
-        <Route
-          path='/designsystem'
-          element={<div>welcome to design system</div>}
-        />
+        <Route path='/designsystem' element={<DesignSystemPage />} />
 
         <Route path='/destinations' element={<p>welcome to destinations</p>} />
         <Route path='/crew' element={<div>welcome to Crew</div>} />

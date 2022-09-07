@@ -1,0 +1,12 @@
+.design-page {
+}
+.color-list {
+  & > * {
+    flex: 1 0 27rem;
+
+    ul > *:first-child {
+      border: 1.1px solid #777;
+      height: 11rem;
+    }
+  }
+}

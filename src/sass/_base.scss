@@ -26,16 +26,16 @@ body {
   min-height: 100vh;
   line-height: 1.45;
   text-rendering: optimizeSpeed;
-  font-family: vars.$ff-sans-normal;
+  font-family: var(--ff-sans-normal);
 }
 
 /* make images easier to work with */
-img,
-picture {
-  width: 100%;
-  display: block;
-  height: auto;
-}
+// img,
+// picture {
+//   width: 100%;
+//   display: block;
+//   height: auto;
+// }
 
 /* make form elements easier to work with */
 input,
@@ -54,7 +54,6 @@ a {
 }
 
 button,
-li,
 a {
   cursor: pointer;
 }
