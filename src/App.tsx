@@ -1,9 +1,10 @@
 import { Routes, Route, Navigate, Link } from 'react-router-dom';
+import './sass/main.scss';
 
 function App() {
   return (
     <div className='App'>
-      <ul>
+      <ul className='flex'>
         <li>
           <Link to='/'>Home</Link>
         </li>
