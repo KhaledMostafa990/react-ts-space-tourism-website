@@ -1,0 +1,275 @@
+@use 'variables.scss' as *;
+
+// =============================================== */
+// ============> #1- Colors                       */
+
+// // Usage --> .-900 down to fs-200
+@each $color, $shades in $all_colors {
+  @each $shade, $value in $shades {
+    .text-#{$color}-#{$shade} {
+      color: $value;
+    }
+
+    .bg-#{$color}-#{$shade} {
+      background-color: $value;
+    }
+  }
+}
+
+// =============================================== */
+// ============> #2- Typography                   */
+
+// Sizes
+// // // Usage --> fs-900 down to fs-200
+@each $font, $targets in $font_size_map {
+  @each $screenSize, $value in $targets {
+    .#{$font} {
+      @if $screenSize == 'xs' {
+        font-size: $value;
+      } @else if $screenSize == 'xl' {
+        @media screen and (min-width: 1440px) {
+          font-size: $value;
+        }
+      }
+    }
+  }
+}
+
+// // weight
+// // // Usage --> fw-700 and fw-400
+@each $font, $value in $font_weight_map {
+  .#{$font} {
+    font-weight: $value;
+  }
+}
+// // font family
+@each $font, $value in $font_family_map {
+  .#{$font} {
+    font-family: $value;
+  }
+}
+
+@each $variant, $value in $letter_spc_map {
+  .letter-spc-#{$variant} {
+    letter-spacing: $value;
+  }
+}
+
+// // Text align
+// // // Usage --> text-center, text-start, text-end
+@each $size, $value in $breakpoints {
+  .#{$size}text {
+    @media screen and (min-width:#{$value}) {
+      &-start {
+        text-align: start;
+      }
+      &-center {
+        text-align: center;
+      }
+      &-end {
+        text-align: end;
+      }
+    }
+  }
+}
+
+// =============================================== */
+// ============> #3- Layouts                      */
+
+// // Display
+[class*='flex'] {
+  display: flex;
+}
+
+[class*='grid'] {
+  display: grid;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+.capitalize {
+  text-transform: capitalize;
+}
+@each $size, $value in $breakpoints {
+  @media screen and (min-width: $value) {
+    .#{$size}block {
+      display: block;
+    }
+    .#{$size}inline-block {
+      display: inline-block;
+    }
+    .#{$size}relative {
+      position: relative;
+    }
+  }
+}
+
+// // Flexbox
+@each $size, $value in $breakpoints {
+  .#{$size}flex {
+    @media screen and (min-width:#{$value}) {
+      &-col {
+        flex-direction: column;
+        &-reverse {
+          flex-direction: column-reverse;
+        }
+      }
+      &-row {
+        flex-direction: row;
+        &-reverse {
+          flex-direction: row-reverse;
+        }
+      }
+    }
+  }
+  .#{$size}align {
+    @media screen and (min-width:#{$value}) {
+      &-start {
+        align-items: start;
+      }
+      &-center {
+        align-items: center;
+      }
+      &-end {
+        align-items: end;
+      }
+    }
+  }
+  .#{$size}justify {
+    @media screen and (min-width:#{$value}) {
+      &-start {
+        justify-content: start;
+      }
+      &-center {
+        justify-content: center;
+      }
+      &-end {
+        justify-content: end;
+      }
+      &-between {
+        justify-content: space-between;
+      }
+      &-evenly {
+        justify-content: space-evenly;
+      }
+      &-around {
+        justify-content: space-around;
+      }
+    }
+  }
+}
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+// // Grid
+$grid-size: 100%;
+$grid-number: 12;
+
+.place-center {
+  place-items: center;
+}
+
+.row {
+  // Redifine the base gap variable with inline-style if you want to in case of using .gap- utility  for the selector
+  --base-gap: 0rem;
+  display: grid;
+  grid-template-columns: repeat(
+    $grid-number,
+    calc(calc($grid-size + var(--base-gap)) / $grid-number - var(--base-gap))
+  );
+
+  @each $size, $sizeValue in $breakpoints {
+    @each $colValue in $grid_col_map {
+      // Control all columns .cols- numberColumn , .sm-cols- , .xl-cols-
+      &.#{$size}cols-#{$colValue} {
+        @media screen and (min-width: $sizeValue) {
+          & > * {
+            grid-column: auto / span $colValue;
+          }
+          // grid-template-columns: repeat(
+          //   $colValue,
+          //   calc(
+          //     calc($grid-size + var(--base-gap)) / $colValue - var(--base-gap)
+          //   )
+          // );
+        }
+      }
+
+      // Control one column
+      .#{$size}col-#{$colValue} {
+        @media screen and (min-width: $sizeValue) {
+          grid-column: span $colValue / span $colValue;
+        }
+      }
+      .#{$size}col-start-#{$colValue} {
+        @media screen and (min-width: $sizeValue) {
+          grid-column-start: $colValue;
+        }
+      }
+      .#{$size}col-end-#{$colValue} {
+        @media screen and (min-width: $sizeValue) {
+          grid-column-end: $colValue;
+        }
+      }
+    }
+  }
+}
+
+// =============================================== */
+// ============> #4- Whitespaces                  */
+
+// // Gaps
+@each $bp, $bpValue in $breakpoints {
+  @each $level, $value in $base_gap_map {
+    @media screen and (min-width: $bpValue) {
+      .#{$bp}gap-#{$level} {
+        gap: #{$value};
+      }
+
+      .#{$bp}grid-gap-row-#{$level} {
+        row-gap: #{$value};
+      }
+
+      .#{$bp}grid-gap-col-#{$level} {
+        column-gap: #{$value};
+      }
+    }
+  }
+}
+
+// // Margin and padding
+@each $level, $sizeValue in $base_sizing_map {
+  @each $bp, $bpValue in $breakpoints {
+    @media screen and (min-width: $bpValue) {
+      .#{$bp}p-#{$level} {
+        padding: #{$sizeValue};
+      }
+      .#{$bp}px-#{$level} {
+        padding-inline: #{$sizeValue};
+      }
+      .#{$bp}py-#{$level} {
+        padding-block: #{$sizeValue};
+      }
+
+      .#{$bp}m-#{$level} {
+        margin: #{$sizeValue};
+      }
+      .#{$bp}mx-#{$level} {
+        margin-inline: #{$sizeValue};
+      }
+      .#{$bp}my-#{$level} {
+        margin-block: #{$sizeValue};
+      }
+      @each $direction, $directionValue in $directions_map {
+        .#{$bp}p#{$direction}-#{$level} {
+          padding-#{$directionValue}: #{$sizeValue};
+        }
+        .#{$bp}m#{$direction}-#{$level} {
+          margin-#{$directionValue}: #{$sizeValue};
+        }
+      }
+    }
+  }
+}

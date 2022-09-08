@@ -1,0 +1,145 @@
+:root {
+  --ff-serif: 'Bellefair', serif;
+  --ff-sans-cond: 'Barlow Condensed', sans-serif;
+  --ff-sans-normal: 'Barlow', sans-serif;
+
+  --base-letter-spc: 1px;
+  --base-sizing: 0.5rem;
+  --base-gap: calc(var(--base-sizing) * 2);
+  --base-transition-duration: 0.475;
+  --base-animiation-Timing: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+// ============================================== */
+// ===============> Breakpoints                  */
+
+$breakpoints: (
+  '': 0,
+  sm-: 480px,
+  md-: 768px,
+  lg-: 992px,
+  xl-: 1440px,
+  xxl-: 1600px,
+);
+
+// ============================================== */
+// ===============> Colors                       */
+
+$all_colors: (
+  primary: (
+    100: rgba(255, 255, 255, 1),
+    200: rgba(255, 255, 255, 0.5),
+    300: rgba(255, 255, 255, 0.35),
+    400: rgba(255, 255, 255, 0.17),
+    500: rgba(255, 255, 255, 0.1),
+    600: rgba(255, 255, 255, 0.04),
+  ),
+  secondary: (
+    100: rgba(208, 214, 249),
+  ),
+  tertiary: (
+    100: rgb(11, 13, 23),
+  ),
+);
+
+// ============================================== */
+// ===============> Fonts                        */
+
+$font_size_map: (
+  // Headings (will increase at bigger sizes)
+  fs-900:
+    (
+      xs: 15rem - 2rem,
+      xl: 15rem,
+    ),
+  fs-800: (
+    xs: 10rem - 1.2rem,
+    xl: 10rem,
+  ),
+  fs-700: (
+    xs: 5.6rem - 1.5rem,
+    xl: 5.6rem,
+  ),
+  fs-600: (
+    xs: 3.2rem - 0.6rem,
+    xl: 3.2rem,
+  ),
+  fs-500: (
+    xs: 2.8rem - 0.8rem,
+    xl: 2.8rem,
+  ),
+  // text
+  fs-400:
+    (
+      xs: 1.8rem,
+    ),
+  fs-300: (
+    xs: 1.6rem,
+  ),
+  fs-200: (
+    xs: 1.4rem,
+  )
+);
+
+$font_weight_map: (
+  fw-700: 700,
+  fw-400: 400,
+);
+
+$font_family_map: (
+  ff-primary: var(--ff-serif),
+  ff-secondary: var(--ff-sans-cond),
+  ff-tertiary: var(--ff-sans-normal),
+);
+
+$letter_spc_map: (
+  0: 0,
+  1: var(--base-letter-spc),
+  2: calc(var(--base-letter-spc) * 2),
+  3: calc(var(--base-letter-spc) * 3),
+  4: calc(var(--base-letter-spc) * 4),
+  5: calc(var(--base-letter-spc) * 5),
+  6: calc(var(--base-letter-spc) * 6),
+  7: calc(var(--base-letter-spc) * 7),
+  8: calc(var(--base-letter-spc) * 8),
+  9: calc(var(--base-letter-spc) * 9),
+  10: calc(var(--base-letter-spc) * 10),
+);
+// ============================================== */
+// ===============> Layouts                      */
+$directions_map: (
+  l: left,
+  r: right,
+  t: top,
+  b: bottom,
+);
+
+$base_sizing_map: (
+  0: 0,
+  1: var(--base-sizing),
+  2: calc(var(--base-sizing) * 2),
+  3: calc(var(--base-sizing) * 3),
+  4: calc(var(--base-sizing) * 4),
+  5: calc(var(--base-sizing) * 5),
+  6: calc(var(--base-sizing) * 6),
+  7: calc(var(--base-sizing) * 7),
+  8: calc(var(--base-sizing) * 8),
+  9: calc(var(--base-sizing) * 9),
+  10: calc(var(--base-sizing) * 10),
+);
+
+$grid_col_map: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
+
+$base_gap_map: (
+  0: 0,
+  1: var(--base-gap),
+  2: calc(var(--base-gap) * 2),
+  3: calc(var(--base-gap) * 3),
+  4: calc(var(--base-gap) * 4),
+  5: calc(var(--base-gap) * 5),
+  6: calc(var(--base-gap) * 6),
+  7: calc(var(--base-gap) * 7),
+  8: calc(var(--base-gap) * 8),
+  9: calc(var(--base-gap) * 9),
+  10: calc(var(--base-gap) * 10),
+);
