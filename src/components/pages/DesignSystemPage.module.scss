@@ -10,3 +10,9 @@
     }
   }
 }
+
+.typographyLists {
+  & > * {
+    flex: 1 0 50%;
+  }
+}
