@@ -6,7 +6,7 @@ function App() {
   const { pathname } = useLocation();
 
   return (
-    <div className='App'>
+    <div className='App fw-400'>
       <ul className='flex'>
         <li>
           <Link to='/home'>Home</Link>
