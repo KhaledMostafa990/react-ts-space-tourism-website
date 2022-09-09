@@ -1,6 +1,13 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import logo from '../../assets/shared/logo.svg';
 import styles from './DesignSystemPage.module.scss';
+
+import { CirclingTabs } from '../base/CirclingTabs';
+import { MainButton } from '../base/MainButton';
+import { MainNav } from '../base/MainNav';
+import { NumberedHeading } from '../base/NumberedHeading';
+import { NumberedTabs } from '../base/NumberedTabs';
+import { SecondaryNav } from '../base/SecondaryNav';
 
 export default function DesignSystemPage() {
   return (
@@ -18,10 +25,69 @@ export default function DesignSystemPage() {
       <main className='flex-col gap-10'>
         <ColorSection />
         <TypographySection />
-
-        <section>interactive Section</section>
+        <InteractiveSection />
       </main>
     </div>
+  );
+}
+
+function InteractiveSection() {
+  return (
+    <section className='flex-col gap-10'>
+      <NumberedHeading num='03' text='interactive' />
+
+      <section className='flex-col align-center gap-2'>
+        <MainNav items={['active', 'hoverd', 'idle', 'More..']} />
+        <ExampleLabel classes='text-center'>
+          Different States of Navigation Bar
+        </ExampleLabel>
+      </section>
+
+      <section className='flex-col gap-10 lg-flex-row lg-justify-between lg-px-10'>
+        <ul className='flex-col align-center gap-10'>
+          <ButtonsExamples buttons={['idle', 'hoverd']} />
+        </ul>
+
+        <ul className='flex-col gap-10'>
+          <li className='flex-col align-center gap-4'>
+            <SecondaryNav items={['active', 'hoverd', 'idle', 'More']} />
+            <ExampleLabel classes='text-center'>
+              {'Tabs (Active, Hover, & Idle)'}
+            </ExampleLabel>
+          </li>
+          <li className='flex-col align-center gap-4'>
+            <CirclingTabs items={['active', 'hoverd', 'idle', 'More..']} />
+            <ExampleLabel classes='text-center'>
+              {'Slider 1 States (Active, Hover, & Idle)'}
+            </ExampleLabel>
+          </li>
+          <li className='flex-col align-center gap-4'>
+            <NumberedTabs items={['active', 'hoverd', 'idle']} />
+            <ExampleLabel classes='text-center'>
+              {'Slider 2 States (Active, Hover, & Idle)'}
+            </ExampleLabel>
+          </li>
+        </ul>
+      </section>
+    </section>
+  );
+}
+
+function ButtonsExamples({ buttons }: any) {
+  const activeExample = (text: string) =>
+    text.match(/hoverd/) && 'btn--main--hoverd';
+
+  return (
+    <>
+      {buttons.map((item: any) => (
+        <li key={item} className='flex-col align-center gap-8'>
+          <MainButton classes={`${activeExample(item)}`}>{item}</MainButton>
+          <ExampleLabel classes='text-center'>
+            {`Landing Page Main Button - ${item.toUpperCase()}`}
+          </ExampleLabel>
+        </li>
+      ))}
+    </>
   );
 }
 
@@ -35,33 +101,33 @@ function TypographySection() {
       >
         <ul className='heading-list flex-col gap-2'>
           <li>
-            <TypoLabel children={'Heading 1 - Bellefair Regular - 150px'} />
+            <ExampleLabel children={'Heading 1 - Bellefair Regular - 150px'} />
             <TypoExample size={'900'} level='1'>
               Earth
             </TypoExample>
           </li>
           <li>
-            <TypoLabel children={'Heading 2 - Bellefair Regular - 100px'} />
+            <ExampleLabel children={'Heading 2 - Bellefair Regular - 100px'} />
             <TypoExample size={'800'} level='2'>
               Venus
             </TypoExample>
           </li>
           <li>
-            <TypoLabel children={'Heading 3 - Bellefair Regular - 56px'} />
+            <ExampleLabel children={'Heading 3 - Bellefair Regular - 56px'} />
             <TypoExample size={'700'} level='3'>
               {'JUPITER & SATURN'}
             </TypoExample>
           </li>
           <li>
-            <TypoLabel children={'Heading 4 - Bellefair Regular - 32px'} />
+            <ExampleLabel children={'Heading 4 - Bellefair Regular - 32px'} />
             <TypoExample size={'600'} level='4'>
               {'URANUS, NEPTUNE, & PLUTO'}
             </TypoExample>
           </li>
           <li>
-            <TypoLabel>
+            <ExampleLabel>
               Heading 5 - Barlow Condensed Regular - 28px - 4.75 Character Space
-            </TypoLabel>
+            </ExampleLabel>
             <TypoExample size={'500'} level='5'>
               SO, YOU WANT TO TRAVEL TO SPACE
             </TypoExample>
@@ -70,28 +136,28 @@ function TypographySection() {
 
         <ul className='other-text flex-col gap-2'>
           <li>
-            <TypoLabel>Subheading 1 - Bellefair Regular - 28px</TypoLabel>
+            <ExampleLabel>Subheading 1 - Bellefair Regular - 28px</ExampleLabel>
             <TypoExample size={'500'} level='6'>
               384,400 km
             </TypoExample>
           </li>
           <li>
-            <TypoLabel>
+            <ExampleLabel>
               Subheading 2 - Barlow Condensed Regular - 14px - 2.35 Character
               Space
-            </TypoLabel>
+            </ExampleLabel>
             <TypoExample size={'200'} level='6'>
               AVG. DISTANCE
             </TypoExample>
           </li>
           <li>
-            <TypoLabel>
+            <ExampleLabel>
               Nav Text - Barlow Condensed Regular - 16px - 2.7 Character Space
-            </TypoLabel>
+            </ExampleLabel>
             <TypoExample size={'300'}>EUROPA</TypoExample>
           </li>
           <li>
-            <TypoLabel children={'Body Text'} />
+            <ExampleLabel children={'Body Text'} />
             <TypoExample size={'400'}>
               Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
               Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi
@@ -133,10 +199,6 @@ function TypoExample({ children, size, level }: any) {
   );
 }
 
-function TypoLabel({ children }: any) {
-  return <p className='text-secondary-100 fs-400'>{children}</p>;
-}
-
 function ColorSection() {
   return (
     <section className='flex-col gap-6'>
@@ -168,15 +230,6 @@ function ColorSection() {
   );
 }
 
-function NumberedHeading({ num, text }: { num: string; text: string }) {
-  return (
-    <h2 className='uppercase fs-600  fw-400 ff-tertiary letter-spc-3 text-primary-100'>
-      <span className='text-primary-300 pr-2 fw-700'>{num}</span>
-      {text}
-    </h2>
-  );
-}
-
 function ColorDetailList({ hex, rgb, hsl }: any) {
   const textColor = hex !== '#0B0D17' && 'text-tertiary-100';
   return (
@@ -197,4 +250,14 @@ function ColorDetailList({ hex, rgb, hsl }: any) {
       </li>
     </ul>
   );
+}
+
+function ExampleLabel({
+  children,
+  classes,
+}: {
+  children: ReactElement | string;
+  classes?: string;
+}) {
+  return <p className={`${classes} text-secondary-100 fs-400`}>{children}</p>;
 }

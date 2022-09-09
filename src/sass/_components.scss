@@ -1,0 +1,193 @@
+@use 'variables.scss' as *;
+@use 'mixins.scss' as *;
+
+.main-nav {
+  background-color: map-get($all_colors, primary, 600);
+  backdrop-filter: blur(81px);
+  -webkit-backdrop-filter: blur(81px);
+
+  width: var(--main-nav-width);
+  height: var(--main-nav-height);
+
+  border-radius: 0.6rem;
+  transition: all var(--base-transition-duration) ease-in-out;
+
+  @include md {
+    --main-nav-height: 9.6rem;
+  }
+
+  // nav list
+  &__list {
+    position: relative;
+    height: var(--main-navlist-height);
+    width: 100%;
+    & > * {
+      flex: 1;
+    }
+
+    @include md {
+      width: var(--main-navlist-width);
+      height: 100%;
+    }
+  }
+
+  // nav item
+  &__item {
+    // Show the indicator behaviour on active/hover states
+    @include indicatorForVerticalNavitem;
+
+    @include md {
+      height: 100%;
+
+      @include indicatorForHorizontalNavitem;
+
+      > * {
+        height: 100%;
+      }
+    }
+  }
+}
+
+.secondary-nav {
+  &__list {
+    position: relative;
+    gap: 3px;
+    width: calc(var(--secondary-navlist-width));
+
+    > * {
+      flex: 1 0 25%;
+    }
+  }
+
+  &__item {
+    @include indicatorSecondaryNavitem;
+  }
+}
+
+.indicator {
+  position: absolute;
+  &--main-nav {
+    // indicator item positions
+    @include indicatorVerticallyPosition;
+
+    @include md {
+      @include indicatorHorizontallyPosition;
+    }
+
+    // indicator before & after element
+    &::after,
+    &::before {
+      content: '';
+      @include indicatorVerticallyPosition;
+      position: absolute;
+      transition: var(--base-transition-duration);
+      opacity: 0;
+
+      @include md {
+        @include indicatorHorizontallyPosition;
+        top: 9rem;
+      }
+    }
+  }
+
+  &--secondary-nav {
+    @include indicatorSeceondNavPosition;
+
+    &::after,
+    &::before {
+      content: '';
+      position: absolute;
+      transition: var(--base-transition-duration);
+      opacity: 0;
+      @include indicatorSeceondNavPosition;
+    }
+  }
+}
+
+.circling-item {
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  transition: all var(--base-transition-duration) ease-out;
+  @include xl {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+
+  &.active {
+    background-color: map-get($all_colors, primary, 100);
+  }
+
+  &:hover {
+    background-color: map-get($all_colors, primary, 200);
+  }
+}
+
+.numbered-item {
+  $baseSize: 4rem;
+  width: $baseSize;
+  height: $baseSize;
+  border-radius: 50%;
+
+  background-color: none;
+
+  border: 0.1rem solid map-get($all_colors, primary, 200);
+  transition: all var(--base-transition-duration) ease-out;
+
+  @include md {
+    width: $baseSize * 1.5;
+    height: $baseSize * 1.5;
+  }
+  @include xl {
+    width: $baseSize * 2;
+    height: $baseSize * 2;
+    // font-size: map-get($font_size_map, fs-600, xl);
+  }
+
+  &.active {
+    background-color: map-get($all_colors, primary, 100);
+    span {
+      color: map-get($all_colors, tertiary, 100);
+    }
+  }
+
+  &:hover {
+    border: 0.1rem solid map-get($all_colors, primary, 100);
+  }
+}
+
+.btn {
+  position: relative;
+  background: none;
+  border: 0;
+
+  &--main {
+    $size: 17rem;
+    background-color: map-get($all_colors, primary, 100);
+
+    width: $size;
+    height: $size;
+
+    border-radius: 50%;
+    transition: var(--base-transition-duration);
+
+    @include md {
+      font-size: map-get($font_size_map, fs-600, xl);
+      width: calc($size * 1.5);
+      height: calc($size * 1.5);
+    }
+
+    @include xl {
+      font-size: map-get($font_size_map, fs-600, xl);
+      width: calc($size * 1.8);
+      height: calc($size * 1.8);
+    }
+
+    &:hover {
+      box-shadow: 0rem 0rem 0.15rem 6.5rem rgba(255, 255, 255, 0.1);
+    }
+    &--hoverd {
+      box-shadow: 0rem 0rem 0.15rem 6.5rem rgba(255, 255, 255, 0.1);
+    }
+  }
+}

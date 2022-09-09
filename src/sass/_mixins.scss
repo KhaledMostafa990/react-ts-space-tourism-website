@@ -1,0 +1,126 @@
+@use 'variables.scss' as *;
+
+@mixin xs {
+  @media screen and (min-width: map-get($breakpoints, 'xs-')) {
+    @content;
+  }
+}
+@mixin md {
+  @media screen and (min-width: map-get($breakpoints, 'md-')) {
+    @content;
+  }
+}
+@mixin lg {
+  @media screen and (min-width: map-get($breakpoints, 'lg-')) {
+    @content;
+  }
+}
+@mixin xl {
+  @media screen and (min-width: map-get($breakpoints, 'xl-')) {
+    @content;
+  }
+}
+@mixin xxl {
+  @media screen and (min-width: map-get($breakpoints, 'xxl-')) {
+    @content;
+  }
+}
+
+$indicator-active: map-get($all_colors, primary, 100);
+$indicator-hover: map-get($all_colors, primary, 400);
+
+/**= For each num of Horizontally/Vertcally items Handling Active & Hover effects**/
+
+@mixin indicator-active-state($size, $direction, $i) {
+  opacity: 1;
+  background-color: $indicator-active;
+  @if $i == 1 {
+    @if $direction == 'X' {
+      transform: translateX(0);
+    } @else {
+      transform: translateY(0);
+    }
+  }
+
+  @if $i != 1 {
+    @if $direction == 'X' {
+      transform: translateX(calc($size * (#{$i} - 1)));
+    } @else {
+      transform: translateY(calc($size * (#{$i} - 1)));
+    }
+  }
+}
+
+@mixin indicator-hover-state($size, $direction, $i) {
+  @include indicator-active-state($size, $direction, $i);
+  background-color: $indicator-hover;
+}
+
+// For main & secondary nav
+
+@mixin indicatorForHorizontalNavitem {
+  @for $i from 1 through 4 {
+    &:nth-child(#{$i}).indicator-active ~ .indicator--main-nav::after {
+      @include indicator-active-state(var(--indicatorWidth), 'X', $i);
+    }
+
+    &:nth-child(#{$i}):hover ~ .indicator--main-nav::before {
+      @include indicator-hover-state(var(--indicatorWidth), 'X', $i);
+    }
+  }
+}
+
+@mixin indicatorForVerticalNavitem {
+  @for $i from 1 through 4 {
+    &:nth-child(#{$i}).indicator-active ~ .indicator--main-nav::after {
+      @include indicator-active-state(var(--indicatorHeight), 'Y', $i);
+    }
+
+    &:nth-child(#{$i}):hover ~ .indicator--main-nav::before {
+      @include indicator-hover-state(var(--indicatorHeight), 'Y', $i);
+    }
+  }
+}
+
+@mixin indicatorSecondaryNavitem {
+  @for $i from 1 through 4 {
+    &:nth-child(#{$i}).indicator-active ~ .indicator--secondary-nav::after {
+      @include indicator-active-state(
+        calc(var(--indicator-width-second-nav) + 3px),
+        'X',
+        $i
+      );
+    }
+
+    &:nth-child(#{$i}):hover ~ .indicator--secondary-nav::before {
+      @include indicator-hover-state(
+        calc(var(--indicator-width-second-nav) + 3px),
+        'X',
+        $i
+      );
+    }
+  }
+}
+
+/**= Horizontally/Vertcally indicator positions for main & secondary nav =**/
+@mixin indicatorVerticallyPosition {
+  top: 0;
+  right: 0;
+  height: var(--indicatorHeight);
+  width: 0.5rem;
+}
+
+@mixin indicatorHorizontallyPosition {
+  left: 0;
+  right: unset;
+  height: 0.5rem;
+  width: var(--indicatorWidth);
+}
+
+@mixin indicatorSeceondNavPosition {
+  bottom: -0.75rem;
+  left: 0;
+  right: unset;
+  height: 0.5rem;
+  width: var(--indicator-width-second-nav);
+}
