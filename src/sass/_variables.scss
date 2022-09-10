@@ -12,7 +12,7 @@
   --main-nav-width: 67.7vw;
   --main-nav-height: 100vh;
 
-  --main-navlist-width: calc(var(--main-nav-width) * 0.9);
+  --main-navlist-width: calc(var(--main-nav-width) * 0.93);
   --main-navlist-height: calc(var(--main-nav-height) * 0.2);
 
   --indicatorHeight: calc((var(--main-navlist-height)) / 4);
@@ -67,7 +67,7 @@ $font_size_map: (
   // Headings (will increase at bigger sizes)
   fs-900:
     (
-      xs: 15rem - 5rem,
+      xs: 15rem - 7rem,
       xl: 15rem,
     ),
   fs-800: (
@@ -83,7 +83,7 @@ $font_size_map: (
     xl: 3.2rem,
   ),
   fs-500: (
-    xs: 2.8rem - 0.2rem,
+    xs: 2.8rem - 0.4rem,
     xl: 2.8rem,
   ),
   // text

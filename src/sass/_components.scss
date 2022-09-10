@@ -1,6 +1,109 @@
 @use 'variables.scss' as *;
 @use 'mixins.scss' as *;
 
+.header {
+  z-index: 999;
+  position: fixed;
+  width: 100%;
+  @include xl {
+    top: 3.2rem;
+
+    &::before {
+      content: '';
+      background-color: map-get($all_colors, primary, 100);
+      width: calc((350px * 100%) / 1440px);
+      height: 0.2rem;
+
+      position: absolute;
+      left: 12.5%;
+      opacity: 0.25;
+      z-index: 999;
+      border-radius: 1rem;
+    }
+  }
+}
+
+.icon-wrapper {
+  z-index: 999;
+  @include md {
+    display: none;
+  }
+}
+
+.hamburger-icon {
+  width: 24px;
+  height: 24px;
+  gap: 0.93rem;
+
+  > * {
+    width: 100%;
+    height: 0.35rem;
+    background-color: map-get($all_colors, secondary, 100);
+    transition: transform var(--base-transition-duration) ease-out 0.1s;
+  }
+
+  &:not(.active):hover {
+    > * {
+      &:nth-child(1) {
+        transform: rotate(10deg);
+      }
+      &:nth-child(3) {
+        transform: rotate(-10deg);
+      }
+    }
+  }
+  &.active:hover {
+    > * {
+      &:nth-child(1) {
+        transform: rotate(60deg);
+      }
+      &:nth-child(3) {
+        transform: rotate(-60deg);
+      }
+    }
+  }
+  &.active {
+    justify-content: center;
+    > * {
+      position: absolute;
+      &:nth-child(2) {
+        opacity: 0;
+      }
+    }
+    // The first and 3rd child to be the shape-> X
+    > * {
+      &:nth-child(1) {
+        transform: rotate(45deg);
+      }
+      &:nth-child(3) {
+        transform: rotate(-45deg);
+      }
+    }
+  }
+  @keyframes stretchingSpan1 {
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(10deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+  @keyframes stretchingSpan2 {
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(-10deg);
+    }
+    100% {
+      transform: rotate(-0deg);
+    }
+  }
+}
+
 .main-nav {
   background-color: map-get($all_colors, primary, 600);
   backdrop-filter: blur(81px);
@@ -12,10 +115,30 @@
   border-radius: 0.6rem;
   transition: all var(--base-transition-duration) ease-in-out;
 
-  @include md {
-    --main-nav-height: 9.6rem;
+  &:not(&-example) {
+    position: fixed;
+    right: -80%;
+    top: 0;
+    opacity: 0.2;
+    &.active {
+      opacity: 1;
+      right: 0;
+    }
   }
 
+  @include md {
+    --main-nav-height: 9.6rem;
+
+    &:not(&-example) {
+      opacity: 1;
+      right: 0;
+    }
+  }
+  @include xl {
+    &:not(&-example) {
+      top: 4rem;
+    }
+  }
   // nav list
   &__list {
     position: relative;
@@ -43,6 +166,21 @@
 
       > * {
         height: 100%;
+      }
+    }
+  }
+
+  &__link {
+    width: 100%;
+    height: 100%;
+    @include md {
+      span {
+        display: none;
+      }
+    }
+    @include xl {
+      span {
+        display: initial;
       }
     }
   }

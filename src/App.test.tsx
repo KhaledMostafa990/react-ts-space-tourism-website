@@ -10,36 +10,32 @@ function renderWithRouter(ui: any, { route = '/' } = {}) {
     userevent: userEvent,
   };
 }
+async function visit(path: string | RegExp, e: any) {
+  if (typeof path !== 'string') {
+    await e.click(screen.getByText(path));
+  } else {
+    await e.click(screen.getByText(`${path}`));
+  }
+}
 
 describe('The App Pages/Routers', () => {
   test('rendring avaiable pages', async () => {
     let { userevent } = renderWithRouter(<App />);
 
-    const designPage = screen.getByRole('link', { name: /design system/i });
-    const homePage = screen.getByRole('link', { name: /home/i });
-    const destinationsPage = screen.getByRole('link', {
-      name: /destinations/i,
-    });
-    const crewPage = screen.getByRole('link', { name: /crew/i });
-    const technologyPage = screen.getByRole('link', {
-      name: /technology/i,
-    });
+    visit(/destinations/, userevent);
+    expect(screen.getByText(/pick your destinations/i)).toBeInTheDocument();
 
-    await userevent.click(designPage);
-    expect(screen.getByText(/design system/i)).toBeInTheDocument();
+    visit(/crew/, userevent);
+    expect(screen.getByText(/welcome to crew/i)).toBeInTheDocument();
 
-    await userevent.click(homePage);
-    expect(screen.getByText(/welcome to home/gi)).toBeInTheDocument();
+    visit('technology', userevent);
+    expect(screen.getByText(/welcome to technology/i)).toBeInTheDocument();
 
-    await userevent.click(screen.getByText(/destinations/i));
-    await userevent.click(destinationsPage);
-    expect(screen.getByText(/welcome to destinations/i)).toBeInTheDocument();
+    visit('home', userevent);
+    expect(screen.getByText(/so, you want to travel to/)).toBeInTheDocument();
 
-    await userevent.click(crewPage);
-    expect(screen.getByText(/welcome to crew/gi)).toBeInTheDocument();
-
-    await userevent.click(technologyPage);
-    expect(screen.getByText(/welcome to technology/gi)).toBeInTheDocument();
+    visit(/design system/i, userevent);
+    expect(screen.getByText(/design system/)).toBeInTheDocument();
   });
 
   test('landing on not existing page', () => {

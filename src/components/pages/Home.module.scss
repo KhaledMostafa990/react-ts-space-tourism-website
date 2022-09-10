@@ -1,0 +1,46 @@
+@use '../../sass/mixins.scss' as *;
+
+.home-wrapper {
+  height: 100vh;
+  width: 100vw;
+}
+
+.homepage {
+  height: 100vh;
+  width: 100vw;
+  background-image: url('../../assets//home/background-home-mobile.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+
+  p {
+    max-inline-size: 38ch;
+  }
+
+  @include md {
+    background-image: url('../../assets/home/background-home-tablet.jpg');
+    background-position-y: 80%;
+  }
+
+  @include lg {
+    padding-inline: 11.1vw;
+  }
+
+  @include xl {
+    background-image: url('../../assets/home/background-home-desktop.jpg');
+    button {
+      position: relative;
+      top: 10rem;
+    }
+  }
+}
+
+.design-system-link {
+  position: absolute;
+  bottom: 0.5%;
+  left: 0.5%;
+  font-size: 1.1rem;
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+  text-transform: capitalize;
+  z-index: 9999;
+}
