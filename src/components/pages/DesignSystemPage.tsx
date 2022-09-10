@@ -15,7 +15,7 @@ export default function DesignSystemPage() {
       style={{ '--base-sizing': '1rem' } as React.CSSProperties}
       className={`${styles['design-page']} flex-col gap-8 px-3 lg-px-10 bg-tertiary-100 text-primary-100`}
     >
-      <header className='header flex align-center justify-between py-4'>
+      <header className='flex align-center justify-between py-4'>
         <img className='logo' src={logo} alt='logo' />
         <h1 className='heading fs-500 fw-400 ff-secondary letter-spc-3 uppercase'>
           design system
