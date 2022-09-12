@@ -1,18 +1,30 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export function SecondaryNav({ items }: { items: string[] }) {
+export function SecondaryNav({
+  items,
+  activeItem,
+  clickHandler,
+}: {
+  items: string[];
+  activeItem?: string;
+  clickHandler?: any;
+}) {
   const activeExample = (text: string) =>
     text.match(/active/) && 'indicator-active';
 
   return (
-    <nav className='secondary-nav '>
-      <ul className='secondary-nav__list flex  '>
+    <nav className='secondary-nav'>
+      <ul className='secondary-nav__list flex'>
         {items.map((item: string, idx: number) => (
           <li
             key={item}
             className={`secondary-nav__item flex justify-center
-            ${activeExample(item)}`}
+            ${activeExample(item)}
+            ${activeItem === item && 'indicator-active'}`}
+            onClick={clickHandler}
+            data-tab={`${item} content tab`}
+            data-testid={`${item} content tab`}
           >
             <Link
               to={item[0] === '.' ? `${item}` : ''}

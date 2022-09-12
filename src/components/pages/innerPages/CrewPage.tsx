@@ -1,5 +1,8 @@
 import React from 'react';
+import { useSubPageData } from 'context/useInnerPageData';
+import { InnerPageContent } from './InnerPageContent';
 
 export default function CrewPage() {
-  return <div>pick your crew</div>;
+  const CrewData = useSubPageData('crew', 'active');
+  return <InnerPageContent {...CrewData} />;
 }

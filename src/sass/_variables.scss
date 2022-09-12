@@ -71,28 +71,32 @@ $font_size_map: (
       xl: 15rem,
     ),
   fs-800: (
-    xs: 10rem - 1.2rem,
+    xs: 10rem - 4.4rem,
+    md: 10rem - 2rem,
     xl: 10rem,
   ),
   fs-700: (
-    xs: 5.6rem - 1rem,
+    xs: 5.6rem - 3.2rem,
+    md: 5.6rem - 1.6rem,
     xl: 5.6rem,
   ),
   fs-600: (
-    xs: 3.2rem - 0.2rem,
+    xs: 3.2rem - 0.8rem,
+    md: 3.2rem - 0.4rem,
     xl: 3.2rem,
   ),
   fs-500: (
-    xs: 2.8rem - 0.4rem,
+    xs: 2.8rem - 1.2rem,
+    md: 2.8rem - 0.8rem,
     xl: 2.8rem,
   ),
-  // text
-  fs-400:
-    (
-      xs: 1.8rem,
-    ),
+  fs-400: (
+    xs: 1.4rem,
+    xl: 1.8rem,
+  ),
   fs-300: (
-    xs: 1.6rem,
+    xs: 1.4rem,
+    xl: 1.6rem,
   ),
   fs-200: (
     xs: 1.4rem,
