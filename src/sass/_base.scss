@@ -16,8 +16,11 @@
 html {
   font-size: 62.5%;
   scroll-behavior: smooth;
-}
 
+  &::-webkit-scrollbar {
+    width: 0rem;
+  }
+}
 html:focus-within {
   scroll-behavior: smooth;
 }

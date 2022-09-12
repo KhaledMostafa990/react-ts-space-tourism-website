@@ -1,6 +1,12 @@
-import React from 'react';
-
-export function CirclingTabs({ items }: { items: string[] }) {
+export function CirclingTabs({
+  items,
+  activeItem,
+  clickHandler,
+}: {
+  items: string[];
+  activeItem?: string;
+  clickHandler?: any;
+}) {
   const activeExample = (text: string) => text.match(/active/) && 'active';
 
   return (
@@ -9,7 +15,11 @@ export function CirclingTabs({ items }: { items: string[] }) {
         <li
           key={item}
           className={` circling-item bg-primary-300
-        ${activeExample(item)}`}
+          ${activeExample(item)}
+          ${item === activeItem && 'active'} `}
+          onClick={clickHandler}
+          data-tab={`${item} content tab`}
+          data-testid={`${item} content tab`}
         />
       ))}
     </ul>
