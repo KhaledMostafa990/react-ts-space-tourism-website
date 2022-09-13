@@ -36,7 +36,7 @@ export function MainNav({
             ${activeExample(item)}
             ${currentActivePath(item)}`}
             onClick={clickHandler}
-            ref={pathname === item.slice(1) ? itemRef : null}
+            ref={pathname === item.slice(1) ? itemRef : undefined}
           >
             <Link
               to={item[0] === '.' ? `${item}` : ''}

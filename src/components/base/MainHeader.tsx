@@ -8,9 +8,16 @@ export function MainHeader() {
   const navitemHandler = clickNavHandler('indicator-active');
   const menuHandler = menuClickHandler('menu-btn', 'main-nav', 'active');
   const itemReference = (e: any) => {
+    document.querySelector('.btn--main')?.addEventListener('click', (e) => {
+      initial = true;
+      console.log(e.target);
+    });
+
     if (initial) {
-      e.click();
-      initial = false;
+      if (e) {
+        e.click();
+        initial = false;
+      }
     }
   };
 
