@@ -1,12 +1,18 @@
 import logo from '../../assets/shared/logo.svg';
 import { MainNav } from '../../components/base/MainNav';
 
+let initial = true;
 export function MainHeader() {
   const navListItems = ['./home', './destinations', './crew', './technology'];
 
   const navitemHandler = clickNavHandler('indicator-active');
-
   const menuHandler = menuClickHandler('menu-btn', 'main-nav', 'active');
+  const itemReference = (e: any) => {
+    if (initial) {
+      e.click();
+      initial = false;
+    }
+  };
 
   return (
     <header
@@ -16,7 +22,11 @@ export function MainHeader() {
         <img className={'logo'} alt={'space tourism logo'} src={logo} />
       </figure>
 
-      <MainNav items={navListItems} clickHandler={navitemHandler} />
+      <MainNav
+        items={navListItems}
+        clickHandler={navitemHandler}
+        itemRef={itemReference}
+      />
 
       <div className={'icon-wrapper'}>
         <button
@@ -47,13 +57,58 @@ function menuClickHandler(
     menu.classList.toggle(activeClass);
   };
 }
+
 function clickNavHandler(indicatorActive: string) {
   return (event: any) => {
     const targetItem = event.target.closest('li');
+    const listItems = Array.from(targetItem.parentElement);
+    const indicatorElm = targetItem.parentElement.lastElementChild;
+    const linkElm = targetItem.firstElementChild.firstElementChild;
 
-    Array.from(targetItem.parentElement).forEach((el: any) => {
+    console.log(targetItem);
+
+    const getStyleValue = (elm: any, value: string) =>
+      getComputedStyle(elm).getPropertyValue(value);
+
+    const setStyleProperty = (
+      elm: HTMLElement,
+      property: string,
+      value: string
+    ) => elm.style.setProperty(property, value);
+
+    const itemFullwidth = getStyleValue(targetItem, 'width');
+    const itemLinkwidth = getStyleValue(linkElm, 'width');
+    const rightPadding = `${
+      (parseInt(itemFullwidth) - parseInt(itemLinkwidth)) / 2
+    }px`;
+
+    listItems.forEach((el: any) => {
       el.classList.remove(indicatorActive);
     });
     targetItem.classList.add(indicatorActive);
+    indicatorElm.style.backgroundColor = 'transparent';
+
+    if (window.innerWidth > 768) {
+      setStyleProperty(
+        indicatorElm,
+        '--indicatorWidth-after',
+        `${itemLinkwidth}`
+      );
+      setStyleProperty(
+        indicatorElm,
+        '--indicatorWidth-after-desktop',
+        `${itemLinkwidth}`
+      );
+      setStyleProperty(
+        indicatorElm,
+        '--indicatorPadding-after',
+        `${rightPadding}`
+      );
+      setStyleProperty(
+        indicatorElm,
+        '--indicatorPadding-after-desktop',
+        `${rightPadding}`
+      );
+    }
   };
 }

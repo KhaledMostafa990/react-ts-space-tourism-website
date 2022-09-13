@@ -5,18 +5,19 @@ import styles from './Home.module.scss';
 
 export default function Home() {
   const { pathname } = useLocation();
+
   return (
     <main
       style={{ '--base-sizing': '2rem' } as React.CSSProperties}
       className={`${styles['homepage']} flex-col gap-5 justify-center lg-align-center lg-justify-between lg-flex-row pt-5`}
     >
       <section
-        className={`flex-col gap-3 lg-gap-3 align-center lg-align-start `}
+        className={`flex-col gap-3 md-gap-1 lg-gap-3 align-center lg-align-start `}
       >
         <h1
           className={`uppercase text-center lg-text-start ff-primary fw-400 text-primary-100`}
         >
-          <span className={`block fs-500 text-secondary-100`}>
+          <span className={`block fs-500 text-secondary-100 letter-spc-2`}>
             so, you want to travel to
           </span>
           <span className={`block fs-900`}>space</span>
@@ -31,7 +32,9 @@ export default function Home() {
       </section>
 
       <section className='btn-wrapper flex justify-center'>
-        <MainButton>explore</MainButton>
+        <Link to={'/destinations'}>
+          <MainButton>explore</MainButton>
+        </Link>
       </section>
 
       {pathname === '/home' && (

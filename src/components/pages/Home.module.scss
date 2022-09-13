@@ -19,17 +19,21 @@
   @include md {
     background-image: url('../../assets/home/background-home-tablet.jpg');
     background-position-y: 80%;
+
+    p {
+      max-inline-size: 49ch;
+    }
   }
 
   @include lg {
     padding-inline: 11.1vw;
+    background-image: url('../../assets/home/background-home-desktop.jpg');
   }
 
   @include xl {
-    background-image: url('../../assets/home/background-home-desktop.jpg');
     button {
       position: relative;
-      top: 10rem;
+      top: 8rem;
     }
   }
 }

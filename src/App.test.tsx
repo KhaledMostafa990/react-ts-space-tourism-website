@@ -88,7 +88,7 @@ Object.keys(data).forEach((contentName: string) => {
           });
 
           await userevent.click(
-            screen.getByRole('button', { name: content.name })
+            screen.getByTestId(`${content.name} content tab`)
           );
 
           expect(screen.getByText(`${description}`)).toBeInTheDocument();
