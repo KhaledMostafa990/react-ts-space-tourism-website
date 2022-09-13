@@ -11,15 +11,19 @@
 
   --main-nav-width: 67.7vw;
   --main-nav-height: 100vh;
-
   --main-navlist-width: calc(var(--main-nav-width) * 0.93);
   --main-navlist-height: calc(var(--main-nav-height) * 0.2);
 
   --indicatorHeight: calc((var(--main-navlist-height)) / 4);
   --indicatorWidth: calc((var(--main-navlist-width)) / 4);
+  --indicatorWidth-after: var(--indicatorWidth);
+  --indicatorPadding-after: 0;
+
+  --indicatorWidth-desktop: calc(var(--main-navlist-width) * 0.8 / 4);
+  --indicatorWidth-after-desktop: var(--indicatorWidth-desktop);
+  --indicatorPadding-after-desktop: 0;
 
   --secondary-navlist-width: 285px;
-
   --indicator-width-second-nav: calc(var(--secondary-navlist-width) / 4);
   --indicator-width-second-nav-desktop: calc(
     var(--secondary-navlist-width-desktop) / 4
@@ -64,12 +68,11 @@ $all_colors: (
 // ===============> Fonts                        */
 
 $font_size_map: (
-  // Headings (will increase at bigger sizes)
-  fs-900:
-    (
-      xs: 15rem - 7rem,
-      xl: 15rem,
-    ),
+  fs-900: (
+    xs: 15rem - 7rem,
+    md: 15rem,
+    xl: 15rem,
+  ),
   fs-800: (
     xs: 10rem - 4.4rem,
     md: 10rem - 2rem,
@@ -100,7 +103,7 @@ $font_size_map: (
   ),
   fs-200: (
     xs: 1.4rem,
-  )
+  ),
 );
 
 $font_weight_map: (

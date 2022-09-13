@@ -11,11 +11,11 @@
     &::before {
       content: '';
       background-color: map-get($all_colors, primary, 100);
-      width: calc((350px * 100%) / 1440px);
+      width: calc((420px * 100%) / 1440px);
       height: 0.2rem;
 
       position: absolute;
-      left: 12.5%;
+      left: 10.5%;
       opacity: 0.25;
       z-index: 999;
       border-radius: 1rem;
@@ -134,6 +134,11 @@
       right: 0;
     }
   }
+
+  @include lg {
+    width: calc(var(--main-nav-width) - 5%);
+  }
+
   @include xl {
     &:not(&-example) {
       top: 4rem;
@@ -152,12 +157,23 @@
       width: var(--main-navlist-width);
       height: 100%;
     }
+    @include lg {
+      width: calc(var(--main-navlist-width) * 0.8);
+    }
   }
 
   // nav item
   &__item {
     // Show the indicator behaviour on active/hover states
     @include indicatorForVerticalNavitem;
+
+    &::before {
+      content: '';
+      transition: all calc(var(--base-transition-duration) * 1.5);
+      background-color: map-get($all_colors, primary, 400);
+      position: absolute;
+      opacity: 0;
+    }
 
     @include md {
       height: 100%;
@@ -207,14 +223,15 @@
   &--main-nav {
     // indicator item positions
     @include indicatorVerticallyPosition;
+    transition: var(--base-transition-duration);
 
     @include md {
       @include indicatorHorizontallyPosition;
+      top: 9rem;
     }
 
     // indicator before & after element
-    &::after,
-    &::before {
+    &::after {
       content: '';
       @include indicatorVerticallyPosition;
       position: absolute;
@@ -223,7 +240,6 @@
 
       @include md {
         @include indicatorHorizontallyPosition;
-        top: 9rem;
       }
     }
   }
@@ -256,8 +272,10 @@
     background-color: map-get($all_colors, primary, 100);
   }
 
-  &:hover {
-    background-color: map-get($all_colors, primary, 200);
+  &:not(&.active) {
+    &:hover {
+      background-color: map-get($all_colors, primary, 200);
+    }
   }
 }
 

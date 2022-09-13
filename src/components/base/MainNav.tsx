@@ -5,9 +5,11 @@ import { NumberedTitle } from './NumberedTitle';
 export function MainNav({
   items,
   clickHandler,
+  itemRef,
 }: {
   items: string[];
   clickHandler?: any;
+  itemRef?: any;
 }) {
   const { pathname } = useLocation();
 
@@ -21,7 +23,7 @@ export function MainNav({
     <nav
       id='main-nav'
       style={{ '--base-sizing': '1.5rem' } as React.CSSProperties}
-      className={`main-nav pl-2 md-pl-0 pt-8 md-pt-0 md-flex md-justify-center ${
+      className={`main-nav pl-2 md-pl-0 pt-8 md-pt-0 md-flex md-justify-center xl-pr-3 ${
         items[0] === 'active' && 'main-nav-example'
       }`}
     >
@@ -34,6 +36,7 @@ export function MainNav({
             ${activeExample(item)}
             ${currentActivePath(item)}`}
             onClick={clickHandler}
+            ref={pathname === item.slice(1) ? itemRef : null}
           >
             <Link
               to={item[0] === '.' ? `${item}` : ''}

@@ -31,12 +31,17 @@ $indicator-hover: map-get($all_colors, primary, 400);
 
 /**= For each num of Horizontally/Vertcally items Handling Active & Hover effects**/
 
-@mixin indicator-active-state($size, $direction, $i) {
+@mixin indicator-active-state($size, $direction, $i, $mainElm) {
   opacity: 1;
   background-color: $indicator-active;
   @if $i == 1 {
     @if $direction == 'X' {
-      transform: translateX(0);
+      @if $mainElm == 'main' {
+        transform: translateX(0);
+      }
+      @if $mainElm == 'after' {
+        transform: translateX($size);
+      }
     } @else {
       transform: translateY(0);
     }
@@ -44,40 +49,101 @@ $indicator-hover: map-get($all_colors, primary, 400);
 
   @if $i != 1 {
     @if $direction == 'X' {
-      transform: translateX(calc($size * (#{$i} - 1)));
+      @if $mainElm == 'main' {
+        transform: translateX(calc($size * (#{$i} - 1)));
+      }
+      @if $mainElm == 'after' {
+        transform: translateX($size);
+      }
     } @else {
       transform: translateY(calc($size * (#{$i} - 1)));
     }
   }
 }
 
-@mixin indicator-hover-state($size, $direction, $i) {
-  @include indicator-active-state($size, $direction, $i);
+@mixin indicator-hover-state($size, $direction, $i, $mainElm) {
+  @include indicator-active-state($size, $direction, $i, $mainElm);
   background-color: $indicator-hover;
 }
 
 // For main & secondary nav
 
-@mixin indicatorForHorizontalNavitem {
-  @for $i from 1 through 4 {
-    &:nth-child(#{$i}).indicator-active ~ .indicator--main-nav::after {
-      @include indicator-active-state(var(--indicatorWidth), 'X', $i);
-    }
-
-    &:nth-child(#{$i}):hover ~ .indicator--main-nav::before {
-      @include indicator-hover-state(var(--indicatorWidth), 'X', $i);
-    }
-  }
-}
-
 @mixin indicatorForVerticalNavitem {
   @for $i from 1 through 4 {
     &:nth-child(#{$i}).indicator-active ~ .indicator--main-nav::after {
-      @include indicator-active-state(var(--indicatorHeight), 'Y', $i);
+      @include indicator-active-state(var(--indicatorHeight), 'Y', $i, 'main');
     }
 
     &:nth-child(#{$i}):hover ~ .indicator--main-nav::before {
-      @include indicator-hover-state(var(--indicatorHeight), 'Y', $i);
+      @include indicator-hover-state(var(--indicatorHeight), 'Y', $i, 'main');
+    }
+
+    &:nth-child(#{$i}) {
+      position: relative;
+
+      &::before {
+        top: 0;
+        right: 0;
+        height: var(--indicatorHeight);
+        width: 0.5rem;
+      }
+      &:not(&.indicator-active) {
+        &:hover::before {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+@mixin indicatorForHorizontalNavitem {
+  @for $i from 1 through 4 {
+    &:nth-child(#{$i}).indicator-active ~ .indicator--main-nav::after {
+      @include indicator-active-state(
+        var(--indicatorPadding-after),
+        'X',
+        $i,
+        'after'
+      );
+    }
+
+    &:nth-child(#{$i}).indicator-active ~ .indicator--main-nav {
+      @include indicator-active-state(var(--indicatorWidth), 'X', $i, 'main');
+    }
+
+    &:nth-child(#{$i}) {
+      position: relative;
+
+      &::before {
+        width: 100%;
+        height: 0.5rem;
+        top: unset;
+        bottom: 0;
+      }
+      &:not(&.indicator-active) {
+        &:hover::before {
+          opacity: 1;
+        }
+      }
+    }
+
+    @include lg {
+      &:nth-child(#{$i}).indicator-active ~ .indicator--main-nav::after {
+        @include indicator-active-state(
+          var(--indicatorPadding-after-desktop),
+          'X',
+          $i,
+          'after'
+        );
+      }
+
+      &:nth-child(#{$i}).indicator-active ~ .indicator--main-nav {
+        @include indicator-active-state(
+          var(--indicatorWidth-desktop),
+          'X',
+          $i,
+          'main'
+        );
+      }
     }
   }
 }
@@ -88,7 +154,8 @@ $indicator-hover: map-get($all_colors, primary, 400);
       @include indicator-active-state(
         calc(var(--indicator-width-second-nav) + 3px),
         'X',
-        $i
+        $i,
+        'main'
       );
     }
 
@@ -96,7 +163,8 @@ $indicator-hover: map-get($all_colors, primary, 400);
       @include indicator-hover-state(
         calc(var(--indicator-width-second-nav) + 3px),
         'X',
-        $i
+        $i,
+        'main'
       );
     }
   }
@@ -114,7 +182,10 @@ $indicator-hover: map-get($all_colors, primary, 400);
   left: 0;
   right: unset;
   height: 0.5rem;
-  width: var(--indicatorWidth);
+  width: var(--indicatorWidth-after);
+  @include lg {
+    width: var(--indicatorWidth-after-desktop);
+  }
 }
 
 @mixin indicatorSeceondNavPosition {

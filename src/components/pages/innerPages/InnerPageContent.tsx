@@ -19,7 +19,7 @@ export function InnerPageContent({
       style={{ '--base-sizing': '2rem' } as React.CSSProperties}
       className={`
       ${styles[`innerpage--${pageName}`]} bg-tertiary-100 pt-6 md-pt-8 xl-pt-10
-      flex-col gap-5`}
+      flex-col gap-3`}
     >
       <NumberedHeading
         classes='text-center md-text-start md-pl-2 xl-pl-7'
@@ -28,8 +28,9 @@ export function InnerPageContent({
       />
 
       <section
-        className={`flex-col align-center gap-3 md-gap-4 xl-gap-0 xl-flex-row xl-px-7  justify-between
+        className={`flex-col align-center gap-4 md-gap-4 xl-gap-0 xl-flex-row xl-px-7  justify-between
         ${pageName === 'technology' && 'xl-px-7 xl-pr-0'}
+        ${pageName == 'destinations' && 'xl-px-10'}
         ${styles[`innerpage--${pageName}__tab-content`]}
         `}
       >
@@ -39,7 +40,7 @@ export function InnerPageContent({
         />
 
         <article
-          className={`flex-col gap-2 align-center xl-align-start px-1 xs-px-3 lg-px-5 xl-px-0 xl-justify-start
+          className={`flex-col gap-3 align-center xl-align-start px-1 xs-px-3 lg-px-5 xl-px-0 xl-justify-start
         ${styles[`innerpage--${pageName}__tab-text-content`]}
         ${pageName === 'technology' && 'xl-flex-row xl-gap-6'} `}
         >
@@ -68,7 +69,7 @@ export function InnerPageContent({
               {pageName === 'technology' && (
                 <span
                   className={
-                    'block text-secondary-100 fs-600 letter-spc-2 text-center xl-text-start'
+                    'block text-secondary-100 fs-500 letter-spc-2 text-center xl-text-start'
                   }
                 >
                   {activeContent.termnology}
@@ -185,7 +186,7 @@ function ContentImage({
 
   const imageFormat = techPage ? '.jpg' : '.png';
   const imageType = techPage
-    ? viewportWidth < 1280
+    ? viewportWidth < 1440
       ? '-landscape'
       : '-portrait'
     : '';
