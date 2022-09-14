@@ -1,7 +1,7 @@
 import logo from '../../assets/shared/logo.svg';
 import { MainNav } from '../../components/base/MainNav';
-
 let initial = true;
+
 export function MainHeader() {
   const navListItems = ['./home', './destinations', './crew', './technology'];
 
@@ -10,16 +10,14 @@ export function MainHeader() {
   const itemReference = (e: any) => {
     document.querySelector('.btn--main')?.addEventListener('click', (e) => {
       initial = true;
-      console.log(e.target);
     });
 
-    if (initial) {
-      if (e) {
-        e.click();
-        initial = false;
-      }
+    if (initial && e) {
+      e.click();
+      initial = false;
     }
   };
+  console.log('appp');
 
   return (
     <header
@@ -50,6 +48,7 @@ export function MainHeader() {
     </header>
   );
 }
+
 function menuClickHandler(
   menuBtn: string,
   menuItem: string,
@@ -71,8 +70,6 @@ function clickNavHandler(indicatorActive: string) {
     const listItems = Array.from(targetItem.parentElement);
     const indicatorElm = targetItem.parentElement.lastElementChild;
     const linkElm = targetItem.firstElementChild.firstElementChild;
-
-    console.log(targetItem);
 
     const getStyleValue = (elm: any, value: string) =>
       getComputedStyle(elm).getPropertyValue(value);
