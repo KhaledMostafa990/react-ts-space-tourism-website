@@ -1,25 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import styles from './InnerPageContent.module.scss';
 
 import { NumberedHeading } from 'components/base/NumberedHeading';
 import { SecondaryNav } from 'components/base/SecondaryNav';
 import { CirclingTabs } from 'components/base/CirclingTabs';
 import { NumberedTabs } from 'components/base/NumberedTabs';
+import { InnerPagesContext } from 'context/InnerPageData';
 
 export function InnerPageContent({
-  pageName,
-  pageOrder,
-  pageTitle,
-  activeContent,
-  tabNamesList,
-  clickTabConfig,
-}: any) {
+  currentPageName,
+}: {
+  currentPageName: string;
+}) {
+  const allData = useContext(InnerPagesContext);
+  const {
+    pageName,
+    pageOrder,
+    pageTitle,
+    activeContent,
+    tabNamesList,
+    clickTabConfig,
+  }: any = allData[currentPageName as keyof typeof allData];
+
   return (
     <main
       style={{ '--base-sizing': '2rem' } as React.CSSProperties}
-      className={`
-      ${styles[`innerpage--${pageName}`]} bg-tertiary-100 pt-6 md-pt-8 xl-pt-10
-      flex-col gap-3`}
+      className={`${styles[`innerpage--${pageName}`]}
+       bg-tertiary-100 pt-6 md-pt-8 xl-pt-10 flex-col gap-3`}
     >
       <NumberedHeading
         classes='text-center md-text-start md-pl-2 xl-pl-7'
@@ -29,9 +36,9 @@ export function InnerPageContent({
 
       <section
         className={`flex-col align-center gap-4 md-gap-4 xl-gap-0 xl-flex-row xl-px-7  justify-between
-        ${pageName === 'technology' && 'xl-px-7 xl-pr-0'}
-        ${pageName == 'destinations' && 'xl-px-10'}
         ${styles[`innerpage--${pageName}__tab-content`]}
+        ${pageName == 'destinations' && 'xl-px-10'}
+        ${pageName === 'technology' && 'xl-px-7 xl-pr-0'}
         `}
       >
         <ContentImage
@@ -97,6 +104,45 @@ export function InnerPageContent({
   );
 }
 
+function ContentImage({
+  activeContentName,
+  pageName,
+}: {
+  activeContentName: string;
+  pageName: string;
+}) {
+  const techPage: boolean = pageName === 'technology';
+  const [viewportWidth, setviewportWidth] = useState(window.innerWidth);
+
+  const imageFormat = techPage ? '.jpg' : '.png';
+  const imageType = techPage
+    ? viewportWidth < 1440
+      ? '-landscape'
+      : '-portrait'
+    : '';
+  const imgSrc = require(`assets/${pageName}/image-${activeContentName
+    .toLowerCase()
+    .replace(' ', '-')}${imageType}${imageFormat}`);
+
+  // Listen for resizing the viewport to change the image type based on it.
+  useEffect(() => {
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+    function onResize() {
+      setviewportWidth(window.innerWidth);
+    }
+  }, []);
+
+  return (
+    <figure
+      className={`${
+        styles[`innerpage--${pageName}__tab-img-wrapper`]
+      } xl-flex xl-justify-center `}
+    >
+      <img src={imgSrc} alt={`${activeContentName.toLowerCase()} image`} />
+    </figure>
+  );
+}
 function Navigations({
   pageName,
   tabList,
@@ -172,44 +218,4 @@ function tabClickHandler(event: any, clickTabConfig: any) {
 
   listItems.forEach((item: HTMLElement) => item.classList.remove(activeClass));
   targetItem.classList.add(activeClass);
-}
-
-function ContentImage({
-  activeContentName,
-  pageName,
-}: {
-  activeContentName: string;
-  pageName: string;
-}) {
-  const techPage: boolean = pageName === 'technology';
-  const [viewportWidth, setviewportWidth] = useState(window.innerWidth);
-
-  const imageFormat = techPage ? '.jpg' : '.png';
-  const imageType = techPage
-    ? viewportWidth < 1440
-      ? '-landscape'
-      : '-portrait'
-    : '';
-  const imgSrc = require(`assets/${pageName}/image-${activeContentName
-    .toLowerCase()
-    .replace(' ', '-')}${imageType}${imageFormat}`);
-
-  // Listen for resizing the viewport to change the image type based on it.
-  useEffect(() => {
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
-    function onResize() {
-      setviewportWidth(window.innerWidth);
-    }
-  }, []);
-
-  return (
-    <figure
-      className={`${
-        styles[`innerpage--${pageName}__tab-img-wrapper`]
-      } xl-flex xl-justify-center `}
-    >
-      <img src={imgSrc} alt={`${activeContentName.toLowerCase()} image`} />
-    </figure>
-  );
 }
