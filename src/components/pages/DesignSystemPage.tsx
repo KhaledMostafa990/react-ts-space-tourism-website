@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import logo from '../../assets/shared/logo.svg';
 import styles from './DesignSystemPage.module.scss';
 
@@ -10,6 +10,26 @@ import { NumberedTabs } from '../base/NumberedTabs';
 import { SecondaryNav } from '../base/SecondaryNav';
 
 export default function DesignSystemPage() {
+  const [scrollLength, setScrollLength] = useState(window.scrollY);
+  const header = document.getElementById('header');
+
+  window.addEventListener('scroll', onScroll);
+  header?.style.setProperty('transition', 'opacity 1s ease-out');
+  useEffect(() => {
+    header?.style.setProperty('opacity', '0');
+  }, []);
+
+  function onScroll() {
+    setScrollLength(window.scrollY);
+
+    if (scrollLength < 100) {
+      header?.style.setProperty('opacity', '0');
+    } else {
+      header?.style.setProperty('opacity', '1');
+    }
+    window.removeEventListener('scroll', onScroll);
+  }
+
   return (
     <div
       style={{ '--base-sizing': '1rem' } as React.CSSProperties}

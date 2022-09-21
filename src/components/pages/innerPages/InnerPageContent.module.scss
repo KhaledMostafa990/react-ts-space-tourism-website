@@ -1,6 +1,51 @@
 @use '../../../sass/variables.scss' as *;
 @use '../../../sass/mixins.scss' as *;
 
+@property --bgGrdient1 {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: rgba(0, 0, 0);
+}
+
+@property --bgGrdient2 {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: rgba(0, 0, 0);
+}
+
+@property --grediantSize {
+  syntax: '<percentage>';
+  inherits: true;
+  initial-value: 0%;
+}
+
+.animating-on-transition {
+  --transitionAmount: 2s;
+  background: linear-gradient(
+    90deg,
+    var(--bgGrdient1) var(--grediantSize),
+    var(--bgGrdient2) 100%
+  );
+
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  z-index: 99;
+
+  transition: --bgGrdient1 var(--transitionAmount) var(--base-animiation-Timing),
+    --bgGrdient2 var(--transitionAmount) var(--base-animiation-Timing),
+    --grediantSize var(--transitionAmount) var(--base-animiation-Timing),
+    z-index var(--transitionAmount);
+
+  &.animate-page {
+    --bgGrdient1: rgba(0, 0, 0, 0);
+    --bgGrdient2: rgba(0, 0, 0, 1);
+    --grediantSize: 100%;
+    z-index: -1;
+  }
+}
+
 .innerpage {
   &--destinations,
   &--crew,
@@ -10,6 +55,7 @@
     background-repeat: no-repeat;
     background-size: 100% 100%;
   }
+
   //  Destinations
   &--destinations {
     background-image: url('../../../assets/destinations/background-destinations-mobile.jpg');
@@ -69,6 +115,7 @@
       }
     }
   }
+
   //  Crew
   &--crew {
     background-image: url('../../../assets/crew/background-crew-mobile.jpg');
@@ -133,6 +180,7 @@
       }
     }
   }
+
   &--technology {
     background-image: url('../../../assets/technology/background-technology-mobile.jpg');
 

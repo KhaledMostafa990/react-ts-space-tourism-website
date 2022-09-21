@@ -80,28 +80,6 @@
       }
     }
   }
-  @keyframes stretchingSpan1 {
-    0% {
-      transform: rotate(0deg);
-    }
-    50% {
-      transform: rotate(10deg);
-    }
-    100% {
-      transform: rotate(0deg);
-    }
-  }
-  @keyframes stretchingSpan2 {
-    0% {
-      transform: rotate(0deg);
-    }
-    50% {
-      transform: rotate(-10deg);
-    }
-    100% {
-      transform: rotate(-0deg);
-    }
-  }
 }
 
 .main-nav {
@@ -173,6 +151,7 @@
       background-color: map-get($all_colors, primary, 400);
       position: absolute;
       opacity: 0;
+      z-index: -999;
     }
 
     @include md {
@@ -259,6 +238,8 @@
 }
 
 .circling-item {
+  cursor: pointer;
+  user-select: none;
   width: 1.4rem;
   height: 1.4rem;
   border-radius: 50%;
@@ -280,6 +261,8 @@
 }
 
 .numbered-item {
+  cursor: pointer;
+  user-select: none;
   $baseSize: 4rem;
   width: $baseSize;
   height: $baseSize;
