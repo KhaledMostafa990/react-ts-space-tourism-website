@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState, CSSProperties } from 'react';
 import styles from './InnerPageContent.module.scss';
 
 import { NumberedHeading } from 'components/base/NumberedHeading';
@@ -6,6 +6,8 @@ import { SecondaryNav } from 'components/base/SecondaryNav';
 import { CirclingTabs } from 'components/base/CirclingTabs';
 import { NumberedTabs } from 'components/base/NumberedTabs';
 import { InnerPagesContext } from 'context/InnerPageData';
+import { useLocation } from 'react-router-dom';
+import { LoadingEffect } from './LoadingEffect';
 
 export function InnerPageContent({
   currentPageName,
@@ -13,6 +15,7 @@ export function InnerPageContent({
   currentPageName: string;
 }) {
   const allData = useContext(InnerPagesContext);
+  const currentPath = useLocation().pathname;
   const {
     pageName,
     pageOrder,
@@ -22,85 +25,94 @@ export function InnerPageContent({
     clickTabConfig,
   }: any = allData[currentPageName as keyof typeof allData];
 
-  return (
-    <main
-      style={{ '--base-sizing': '2rem' } as React.CSSProperties}
-      className={`${styles[`innerpage--${pageName}`]}
-       bg-tertiary-100 pt-6 md-pt-8 xl-pt-10 flex-col gap-3`}
-    >
-      <NumberedHeading
-        classes='text-center md-text-start md-pl-2 xl-pl-7'
-        num={`${pageOrder}`}
-        text={`${pageTitle}`}
-      />
+  const [loaded, setInitially] = useState(false);
 
-      <section
-        className={`flex-col align-center gap-4 md-gap-4 xl-gap-0 xl-flex-row xl-px-7  justify-between
+  useEffect(() => {
+    setInitially(true);
+  }, [currentPath]);
+
+  return (
+    <>
+      <LoadingEffect loaded={loaded} />
+      <main
+        style={{ '--base-sizing': '2rem' } as CSSProperties}
+        className={`${styles[`innerpage--${pageName}`]}
+        bg-tertiary-100 pt-6 md-pt-8 xl-pt-10 flex-col gap-3`}
+      >
+        <NumberedHeading
+          classes='text-center md-text-start md-pl-2 xl-pl-7'
+          num={`${pageOrder}`}
+          text={`${pageTitle}`}
+        />
+
+        <section
+          className={`flex-col align-center gap-4 md-gap-4 xl-gap-0 xl-flex-row xl-px-7  justify-between
         ${styles[`innerpage--${pageName}__tab-content`]}
         ${pageName == 'destinations' && 'xl-px-10'}
         ${pageName === 'technology' && 'xl-px-7 xl-pr-0'}
         `}
-      >
-        <ContentImage
-          activeContentName={activeContent.name}
-          pageName={pageName}
-        />
-
-        <article
-          className={`flex-col gap-3 align-center xl-align-start px-1 xs-px-3 lg-px-5 xl-px-0 xl-justify-start
-        ${styles[`innerpage--${pageName}__tab-text-content`]}
-        ${pageName === 'technology' && 'xl-flex-row xl-gap-6'} `}
         >
-          <Navigations
+          <ContentImage
+            activeContentName={activeContent.name}
             pageName={pageName}
-            tabList={tabNamesList}
-            clickConfig={clickTabConfig}
-            currentActiveName={activeContent.name}
           />
 
-          <div>
-            <h2
-              className={`text-primary-100 ff-primary fw-400 text-center uppercase xl-text-start
+          <article
+            className={`flex-col gap-3 align-center xl-align-start px-1 xs-px-3 lg-px-5 xl-px-0 xl-justify-start
+        ${styles[`innerpage--${pageName}__tab-text-content`]}
+        ${pageName === 'technology' && 'xl-flex-row xl-gap-6'} `}
+          >
+            <Navigations
+              pageName={pageName}
+              tabList={tabNamesList}
+              clickConfig={clickTabConfig}
+              currentActiveName={activeContent.name}
+            />
+
+            <div>
+              <h2
+                className={`text-primary-100 ff-primary fw-400 text-center uppercase xl-text-start
             ${pageName === 'destinations' ? 'fs-800' : 'fs-700'}`}
-            >
-              {pageName === 'crew' && (
-                <span
-                  className={
-                    'block text-primary-200 text-center xl-text-start fs-600 '
-                  }
-                >
-                  {activeContent.role}
-                </span>
-              )}
+              >
+                {pageName === 'crew' && (
+                  <span
+                    className={
+                      'block text-primary-200 text-center xl-text-start fs-600 '
+                    }
+                  >
+                    {activeContent.role}
+                  </span>
+                )}
 
-              {pageName === 'technology' && (
-                <span
-                  className={
-                    'block text-secondary-100 fs-500 letter-spc-2 text-center xl-text-start'
-                  }
-                >
-                  {activeContent.termnology}
-                </span>
-              )}
-              {activeContent.name}
-            </h2>
+                {pageName === 'technology' && (
+                  <span
+                    className={
+                      'block text-secondary-100 fs-500 letter-spc-2 text-center xl-text-start'
+                    }
+                  >
+                    {activeContent.termnology}
+                  </span>
+                )}
+                {activeContent.name}
+              </h2>
 
-            <p
-              className={`text-secondary-100 fs-400 text-center xl-text-start 
+              <p
+                className={`text-secondary-100 fs-400 text-center xl-text-start 
             ${styles[`innerpage--${pageName}__tab-description`]} `}
-            >
-              {pageName === 'crew'
-                ? activeContent.bio
-                : activeContent.description}
-            </p>
-          </div>
+              >
+                {pageName === 'crew'
+                  ? activeContent.bio
+                  : activeContent.description}
+              </p>
+            </div>
 
-          {pageName === 'destinations' && (
-            <TabDistance pageName={pageName} content={activeContent} />
-          )}
-        </article>
-      </section>
-    </main>
+            {pageName === 'destinations' && (
+              <TabDistance pageName={pageName} content={activeContent} />
+            )}
+          </article>
+        </section>
+      </main>
+    </>
   );
 }
 

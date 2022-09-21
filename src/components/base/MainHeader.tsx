@@ -2,25 +2,26 @@ import logo from '../../assets/shared/logo.svg';
 import { MainNav } from '../../components/base/MainNav';
 let initial = true;
 
-export function MainHeader() {
+export default function MainHeader() {
   const navListItems = ['./home', './destinations', './crew', './technology'];
 
   const navitemHandler = clickNavHandler('indicator-active');
   const menuHandler = menuClickHandler('menu-btn', 'main-nav', 'active');
+
   const itemReference = (e: any) => {
-    document.querySelector('.btn--main')?.addEventListener('click', (e) => {
-      initial = true;
-    });
+    document
+      .querySelector('.btn--main')
+      ?.addEventListener('click', () => (initial = true));
 
     if (initial && e) {
       e.click();
       initial = false;
     }
   };
-  console.log('appp');
 
   return (
     <header
+      id='header'
       className={`header flex justify-between align-center pt-6 px-7 lg-pt-5 xl-pl-5`}
     >
       <figure>
