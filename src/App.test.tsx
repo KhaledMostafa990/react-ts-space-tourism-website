@@ -3,21 +3,28 @@ import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import data from '../src/data/data.json';
+import { InnerPagesProvider } from 'context/InnerPageData';
 
 function renderWithRouter(ui: any, { route = '/' } = {}) {
   window.history.pushState({}, 'Test page', route);
+  const uiWithContextProvider: any = (
+    <InnerPagesProvider>{ui}</InnerPagesProvider>
+  );
+
   return {
-    ...render(ui, { wrapper: BrowserRouter }),
+    ...render(uiWithContextProvider, { wrapper: BrowserRouter }),
     userevent: userEvent,
   };
 }
 
-async function visit(path: string | RegExp, e: any) {
-  if (typeof path !== 'string') {
-    await e.click(screen.getByText(path));
-  } else {
-    await e.click(screen.getByText(`${path}`));
-  }
+function visit(path: string | RegExp, e: any) {
+  setTimeout(async () => {
+    if (typeof path !== 'string') {
+      await e.click(screen.getByText(path));
+    } else {
+      await e.click(screen.getByText(`${path}`));
+    }
+  }, 2000);
 }
 
 function lazyExpect(value: string | RegExp) {
@@ -27,7 +34,7 @@ function lazyExpect(value: string | RegExp) {
     } else {
       expect(screen.getByText(value));
     }
-  }, 1000);
+  }, 2000);
 }
 
 describe('The App Pages/Routers', () => {
@@ -40,14 +47,14 @@ describe('The App Pages/Routers', () => {
     visit(/crew/, userevent);
     lazyExpect(/welcome to crew/i);
 
-    visit('technology', userevent);
+    visit(/technology/, userevent);
     lazyExpect(/welcome to technology/i);
 
-    visit('home', userevent);
+    visit(/home/, userevent);
     expect(screen.getByText(/so, you want to travel to/)).toBeInTheDocument();
 
     visit(/design system/i, userevent);
-    expect(screen.getByText(/design system/)).toBeInTheDocument();
+    expect(screen.getByText(/design system/i)).toBeInTheDocument();
   });
 
   test('landing on not existing page', () => {
@@ -58,14 +65,14 @@ describe('The App Pages/Routers', () => {
 
 Object.keys(data).forEach((contentName: string) => {
   const current = data[contentName as keyof typeof data];
-
   describe(`${contentName} page`, () => {
     test('The page heading', () => {
       renderWithRouter(<App />, { route: `/${contentName}` });
+
       expect(
         screen.getByRole('heading', {
           level: 1,
-          name: new RegExp(`${current[0].pageTitle}`, 'i'),
+          name: new RegExp(`${current[0].pageTitle}`, ''),
         })
       ).toBeInTheDocument();
     });
