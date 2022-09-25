@@ -3,17 +3,20 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { InnerPagesProvider } from 'context/InnerPageData';
+import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
 root.render(
-  <InnerPagesProvider>
+  <BrowserRouter>
     <React.StrictMode>
-      <App />
+      <InnerPagesProvider>
+        <App />
+      </InnerPagesProvider>
     </React.StrictMode>
-  </InnerPagesProvider>
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
