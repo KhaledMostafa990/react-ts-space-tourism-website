@@ -12,7 +12,7 @@ export function NumberedTabs({
   const activeExample = (text: string) => text.match(/active/) && 'active';
 
   return (
-    <ul className={`flex-row xl-flex-col align-center gap-3`}>
+    <ul className={`flex-row lg-flex-col align-center gap-3`}>
       {items.map((item: string, idx: number) => (
         <li
           key={item}
