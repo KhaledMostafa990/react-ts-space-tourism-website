@@ -52,6 +52,12 @@
   &--technology {
     min-height: 100vh;
 
+    @include lg {
+      max-height: 100vh;
+      height: 100vh;
+    }
+
+    overflow: hidden;
     background-repeat: no-repeat;
     background-size: 100% 100%;
   }
@@ -64,7 +70,7 @@
       background-image: url('../../../assets/destinations/background-destinations-tablet.jpg');
     }
 
-    @include xl {
+    @include lg {
       background-image: url('../../../assets/destinations/background-destinations-desktop.jpg');
     }
 
@@ -75,6 +81,10 @@
         @include md {
           width: 300px;
         }
+        @include lg {
+          width: 375px;
+        }
+
         @include xl {
           width: 445px;
         }
@@ -84,7 +94,7 @@
     &__tab-text-content {
       width: 100%;
 
-      @include xl {
+      @include lg {
         width: auto;
       }
     }
@@ -100,7 +110,7 @@
       @include md {
         max-inline-size: 63ch;
       }
-      @include xl {
+      @include lg {
         max-inline-size: 46ch;
         height: 16rem;
       }
@@ -110,7 +120,7 @@
       width: 100%;
       border-top: 0.12rem solid map-get($all_colors, primary, 400);
 
-      @include xl {
+      @include lg {
         // width: fit-content;
       }
     }
@@ -124,7 +134,7 @@
       background-image: url('../../../assets/crew/background-crew-tablet.jpg');
     }
 
-    @include xl {
+    @include lg {
       background-image: url('../../../assets/crew/background-crew-desktop.jpg');
     }
 
@@ -133,7 +143,7 @@
         flex-direction: column-reverse;
       }
 
-      @include xl {
+      @include lg {
         flex-direction: row-reverse;
       }
     }
@@ -145,12 +155,12 @@
         position: relative;
         left: 1.25rem;
         @include md {
-          width: 450px;
-          height: 570px;
+          width: 400px;
+          height: 500px;
         }
-        @include xl {
-          width: 550px;
-          height: 712px;
+        @include lg {
+          width: 450px;
+          height: 500px;
         }
       }
     }
@@ -174,7 +184,7 @@
       @include md {
         max-inline-size: 55ch;
       }
-      @include xl {
+      @include lg {
         max-inline-size: 44ch;
         height: 16rem;
       }
@@ -188,12 +198,12 @@
       background-image: url('../../../assets/technology/background-technology-tablet.jpg');
     }
 
-    @include xl {
+    @include lg {
       background-image: url('../../../assets/technology/background-technology-desktop.jpg');
     }
 
     &__tab-content {
-      @include xl {
+      @include lg {
         flex-direction: row-reverse;
       }
     }
@@ -204,11 +214,16 @@
       img {
         width: 100%;
         height: auto;
+        @include lg {
+          width: 400px;
+        }
+
         @include xl {
           width: 515px;
         }
       }
-      @include xl {
+
+      @include lg {
         width: unset;
       }
     }
@@ -225,7 +240,7 @@
         max-inline-size: 50ch;
       }
 
-      @include xl {
+      @include lg {
         max-inline-size: 44ch;
         height: 16rem;
       }

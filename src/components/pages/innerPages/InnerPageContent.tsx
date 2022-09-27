@@ -9,6 +9,8 @@ import { InnerPagesContext } from 'context/InnerPageData';
 import { useLocation } from 'react-router-dom';
 import { LoadingEffect } from './LoadingEffect';
 
+import { motion } from 'framer-motion';
+
 export function InnerPageContent({
   currentPageName,
 }: {
@@ -32,24 +34,36 @@ export function InnerPageContent({
   }, [currentPath]);
 
   return (
-    <>
-      <LoadingEffect loaded={loaded} />
+    <motion.div
+      initial={{
+        backgroundColor: 'black',
+        opacity: 0.89,
+      }}
+      animate={{
+        backgroundColor: 'transparent',
+        opacity: 1,
+      }}
+      transition={{
+        duration: 0.14,
+      }}
+    >
+      {/* <LoadingEffect loaded={loaded} /> */}
       <main
         style={{ '--base-sizing': '2rem' } as CSSProperties}
         className={`${styles[`innerpage--${pageName}`]}
-        bg-tertiary-100 pt-6 md-pt-8 xl-pt-10 flex-col gap-3`}
+        bg-tertiary-100 pt-6 md-pt-8 lg-pt-10 flex-col gap-3`}
       >
         <NumberedHeading
-          classes='text-center md-text-start md-pl-2 xl-pl-7'
+          classes='text-center md-text-start md-pl-2 lg-pl-7'
           num={`${pageOrder}`}
           text={`${pageTitle}`}
         />
 
         <section
-          className={`flex-col align-center gap-4 md-gap-4 xl-gap-0 xl-flex-row xl-px-7  justify-between
+          className={`flex-col align-center gap-4 md-gap-4 lg-gap-4 lg-flex-row  lg-px-7   justify-between
         ${styles[`innerpage--${pageName}__tab-content`]}
-        ${pageName == 'destinations' && 'xl-px-10'}
-        ${pageName === 'technology' && 'xl-px-7 xl-pr-0'}
+        ${pageName == 'destinations' && 'lg-px-7'}
+        ${pageName === 'technology' && 'lg-px-7 lg-pr-0'}
         `}
         >
           <ContentImage
@@ -58,9 +72,9 @@ export function InnerPageContent({
           />
 
           <article
-            className={`flex-col gap-3 align-center xl-align-start px-1 xs-px-3 lg-px-5 xl-px-0 xl-justify-start
+            className={`flex-col gap-3 align-center lg-align-start px-1 xs-px-3 lg-px-5 lg-px-0 lg-justify-start
         ${styles[`innerpage--${pageName}__tab-text-content`]}
-        ${pageName === 'technology' && 'xl-flex-row xl-gap-6'} `}
+        ${pageName === 'technology' && 'lg-flex-row lg-gap-6'} `}
           >
             <Navigations
               pageName={pageName}
@@ -71,13 +85,13 @@ export function InnerPageContent({
 
             <div>
               <h2
-                className={`text-primary-100 ff-primary fw-400 text-center uppercase xl-text-start
+                className={`text-primary-100 ff-primary fw-400 text-center uppercase lg-text-start
             ${pageName === 'destinations' ? 'fs-800' : 'fs-700'}`}
               >
                 {pageName === 'crew' && (
                   <span
                     className={
-                      'block text-primary-200 text-center xl-text-start fs-600 '
+                      'block text-primary-200 text-center lg-text-start fs-600 '
                     }
                   >
                     {activeContent.role}
@@ -87,7 +101,7 @@ export function InnerPageContent({
                 {pageName === 'technology' && (
                   <span
                     className={
-                      'block text-secondary-100 fs-500 letter-spc-2 text-center xl-text-start'
+                      'block text-secondary-100 fs-500 letter-spc-2 text-center lg-text-start'
                     }
                   >
                     {activeContent.termnology}
@@ -97,7 +111,7 @@ export function InnerPageContent({
               </h2>
 
               <p
-                className={`text-secondary-100 fs-400 text-center xl-text-start 
+                className={`text-secondary-100 fs-400 text-center lg-text-start 
             ${styles[`innerpage--${pageName}__tab-description`]} `}
               >
                 {pageName === 'crew'
@@ -112,7 +126,7 @@ export function InnerPageContent({
           </article>
         </section>
       </main>
-    </>
+    </motion.div>
   );
 }
 
@@ -128,7 +142,7 @@ function ContentImage({
 
   const imageFormat = techPage ? '.jpg' : '.png';
   const imageType = techPage
-    ? viewportWidth < 1440
+    ? viewportWidth < 992
       ? '-landscape'
       : '-portrait'
     : '';
@@ -149,7 +163,7 @@ function ContentImage({
     <figure
       className={`${
         styles[`innerpage--${pageName}__tab-img-wrapper`]
-      } xl-flex xl-justify-center `}
+      } lg-flex lg-justify-center `}
     >
       <img src={imgSrc} alt={`${activeContentName.toLowerCase()} image`} />
     </figure>
@@ -193,7 +207,7 @@ function Navigations({
 function TabDistance({ pageName, content }: any) {
   const TimeAndDistance = ({ title, describe }: any) => {
     return (
-      <h3 className='text-primary-100 flex-col gap-1 fw-400 ff-primary fs-600 uppercase text-center xl-text-start'>
+      <h3 className='text-primary-100 flex-col gap-1 fw-400 ff-primary fs-600 uppercase text-center lg-text-start'>
         <span className='text-secondary-100 ff-secondary fs-400 letter-spc-2'>
           {title}
         </span>
@@ -203,7 +217,7 @@ function TabDistance({ pageName, content }: any) {
   };
   return (
     <section
-      className={`flex-col md-flex-row md-justify-center xl-justify-start  gap-3 pt-1 md-pt-2 pb-2
+      className={`flex-col md-flex-row md-justify-center lg-justify-start  gap-3 pt-1 md-pt-2 pb-2
           ${styles[`innerpage--${pageName}__tab-destance`]}`}
     >
       <TimeAndDistance title='avg.distance' describe={`${content.distance}`} />

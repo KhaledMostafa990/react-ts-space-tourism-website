@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { NumberedTitle } from './NumberedTitle';
-
+import { motion } from 'framer-motion';
 export function MainNav({
   items,
   clickHandler,
@@ -19,6 +19,27 @@ export function MainNav({
   const currentActivePath = (text: string) =>
     text.slice(1).toLowerCase() === pathname && 'indicator-active';
 
+  const listVariant = {
+    hidden: {
+      opacity: 0,
+      transition: {
+        // when: 'afterChildren',
+      },
+    },
+
+    visible: {
+      opacity: 1,
+      transition: {
+        when: 'beforeChildren',
+        staggerChildren: 0.12,
+      },
+    },
+  };
+
+  const itemVariant = {
+    hidden: { opacity: 0, y: -25, x: -35 },
+    visible: { opacity: 1, y: 0, x: 0 },
+  };
   return (
     <nav
       id='main-nav'
@@ -27,9 +48,15 @@ export function MainNav({
         items[0] === 'active' && 'main-nav-example'
       }`}
     >
-      <ul className='main-nav__list flex-col  md-flex-row md-justify-center md-align-center '>
+      <motion.ul
+        className='main-nav__list flex-col  md-flex-row md-justify-center md-align-center '
+        variants={listVariant}
+        initial='hidden'
+        animate='visible'
+      >
         {items.map((item: string, idx: number) => (
-          <li
+          <motion.li
+            variants={itemVariant}
             key={item}
             className={`
             main-nav__item flex align-center md-justify-center 
@@ -47,10 +74,10 @@ export function MainNav({
                 text={item[0] === '.' ? item.slice(2) : item}
               />
             </Link>
-          </li>
+          </motion.li>
         ))}
         <li className='indicator indicator--main-nav' />
-      </ul>
+      </motion.ul>
     </nav>
   );
 }

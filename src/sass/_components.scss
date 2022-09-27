@@ -11,7 +11,7 @@
     &::before {
       content: '';
       background-color: map-get($all_colors, primary, 100);
-      width: calc((420px * 100%) / 1440px);
+      width: 0;
       height: 0.2rem;
 
       position: absolute;
@@ -19,6 +19,13 @@
       opacity: 0.25;
       z-index: 999;
       border-radius: 1rem;
+
+      animation: navLine 0.25s ease-out 0.15s forwards;
+      @keyframes navLine {
+        to {
+          width: calc((420px * 100%) / 1440px);
+        }
+      }
     }
   }
 }
@@ -36,10 +43,21 @@
   gap: 0.93rem;
 
   > * {
-    width: 100%;
+    width: 0;
     height: 0.35rem;
     background-color: map-get($all_colors, secondary, 100);
     transition: transform var(--base-transition-duration) ease-out 0.1s;
+    @for $i from 1 to 4 {
+      &:nth-child(#{$i}) {
+        animation: hamburgerLine #{calc($i / 3.1)}s ease-out forwards;
+      }
+    }
+
+    @keyframes hamburgerLine {
+      to {
+        width: 100%;
+      }
+    }
   }
 
   &:not(.active):hover {
@@ -83,15 +101,21 @@
 }
 
 .main-nav {
-  background-color: map-get($all_colors, primary, 600);
-  backdrop-filter: blur(81px);
-  -webkit-backdrop-filter: blur(81px);
+  background-color: transparent;
 
   width: var(--main-nav-width);
   height: var(--main-nav-height);
 
   border-radius: 0.6rem;
   transition: all var(--base-transition-duration) ease-in-out;
+  animation: navbg 2.5s ease-out 0.2s forwards;
+  @keyframes navbg {
+    to {
+      background-color: map-get($all_colors, primary, 600);
+      backdrop-filter: blur(81px);
+      -webkit-backdrop-filter: blur(81px);
+    }
+  }
 
   &:not(&-example) {
     position: fixed;
