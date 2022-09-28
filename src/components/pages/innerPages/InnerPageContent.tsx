@@ -7,10 +7,40 @@ import { CirclingTabs } from 'components/base/CirclingTabs';
 import { NumberedTabs } from 'components/base/NumberedTabs';
 import { InnerPagesContext } from 'context/InnerPageData';
 import { useLocation } from 'react-router-dom';
-import { LoadingEffect } from './LoadingEffect';
 
 import { motion } from 'framer-motion';
 
+const listVariant = {
+  hidden: {
+    opacity: 0,
+    transition: {
+      when: 'afterChildren',
+    },
+  },
+
+  visible: {
+    opacity: 1,
+    transition: {
+      when: 'beforeChildren',
+      staggerChildren: 0.5,
+      type: 'spring',
+    },
+  },
+};
+
+const itemVariant = {
+  hidden: {
+    opacity: 0,
+    y: 50,
+  },
+  visible: {
+    transition: {
+      duration: 1,
+    },
+    opacity: 1,
+    y: 0,
+  },
+};
 export function InnerPageContent({
   currentPageName,
 }: {
@@ -53,12 +83,26 @@ export function InnerPageContent({
         className={`${styles[`innerpage--${pageName}`]}
         bg-tertiary-100 pt-6 md-pt-8 lg-pt-10 flex-col gap-3`}
       >
-        <NumberedHeading
-          classes='text-center md-text-start md-pl-2 lg-pl-7'
-          num={`${pageOrder}`}
-          text={`${pageTitle}`}
-        />
-
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: -75,
+          }}
+          transition={{
+            type: 'spring',
+            duration: 3,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+        >
+          <NumberedHeading
+            classes='text-center md-text-start md-pl-2 lg-pl-7'
+            num={`${pageOrder}`}
+            text={`${pageTitle}`}
+          />
+        </motion.div>
         <section
           className={`flex-col align-center gap-4 md-gap-4 lg-gap-4 lg-flex-row  lg-px-7   justify-between
         ${styles[`innerpage--${pageName}__tab-content`]}
@@ -66,25 +110,60 @@ export function InnerPageContent({
         ${pageName === 'technology' && 'lg-px-7 lg-pr-0'}
         `}
         >
-          <ContentImage
-            activeContentName={activeContent.name}
-            pageName={pageName}
-          />
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 75,
+            }}
+            transition={{
+              type: 'spring',
+              duration: 2.5,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+          >
+            <ContentImage
+              activeContentName={activeContent.name}
+              pageName={pageName}
+            />
+          </motion.div>
 
           <article
             className={`flex-col gap-3 align-center lg-align-start px-1 xs-px-3 lg-px-5 lg-px-0 lg-justify-start
         ${styles[`innerpage--${pageName}__tab-text-content`]}
         ${pageName === 'technology' && 'lg-flex-row lg-gap-6'} `}
           >
-            <Navigations
-              pageName={pageName}
-              tabList={tabNamesList}
-              clickConfig={clickTabConfig}
-              currentActiveName={activeContent.name}
-            />
+            <motion.div
+              initial={{
+                opacity: 0,
+                x: -75,
+              }}
+              transition={{
+                type: 'spring',
+                duration: 2,
+              }}
+              animate={{
+                opacity: 1,
+                x: 0,
+              }}
+            >
+              <Navigations
+                pageName={pageName}
+                tabList={tabNamesList}
+                clickConfig={clickTabConfig}
+                currentActiveName={activeContent.name}
+              />
+            </motion.div>
 
-            <div>
-              <h2
+            <motion.div
+              variants={listVariant}
+              initial='hidden'
+              animate='visible'
+            >
+              <motion.h2
+                variants={itemVariant}
                 className={`text-primary-100 ff-primary fw-400 text-center uppercase lg-text-start
             ${pageName === 'destinations' ? 'fs-800' : 'fs-700'}`}
               >
@@ -108,17 +187,18 @@ export function InnerPageContent({
                   </span>
                 )}
                 {activeContent.name}
-              </h2>
+              </motion.h2>
 
-              <p
+              <motion.p
+                variants={itemVariant}
                 className={`text-secondary-100 fs-400 text-center lg-text-start 
             ${styles[`innerpage--${pageName}__tab-description`]} `}
               >
                 {pageName === 'crew'
                   ? activeContent.bio
                   : activeContent.description}
-              </p>
-            </div>
+              </motion.p>
+            </motion.div>
 
             {pageName === 'destinations' && (
               <TabDistance pageName={pageName} content={activeContent} />
@@ -138,9 +218,8 @@ function ContentImage({
   pageName: string;
 }) {
   const techPage: boolean = pageName === 'technology';
-  const [viewportWidth, setviewportWidth] = useState(window.innerWidth);
-
   const imageFormat = techPage ? '.jpg' : '.png';
+  const [viewportWidth, setviewportWidth] = useState(window.innerWidth);
   const imageType = techPage
     ? viewportWidth < 992
       ? '-landscape'
@@ -207,12 +286,20 @@ function Navigations({
 function TabDistance({ pageName, content }: any) {
   const TimeAndDistance = ({ title, describe }: any) => {
     return (
-      <h3 className='text-primary-100 flex-col gap-1 fw-400 ff-primary fs-600 uppercase text-center lg-text-start'>
-        <span className='text-secondary-100 ff-secondary fs-400 letter-spc-2'>
+      <motion.h3
+        variants={listVariant}
+        initial='hidden'
+        animate='visible'
+        className='text-primary-100 flex-col gap-1 fw-400 ff-primary fs-600 uppercase text-center lg-text-start'
+      >
+        <motion.span
+          variants={itemVariant}
+          className='text-secondary-100 ff-secondary fs-400 letter-spc-2'
+        >
           {title}
-        </span>
-        <span>{describe}</span>
-      </h3>
+        </motion.span>
+        <motion.span variants={itemVariant}>{describe}</motion.span>
+      </motion.h3>
     );
   };
   return (
