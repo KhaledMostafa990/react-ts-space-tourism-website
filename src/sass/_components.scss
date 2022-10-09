@@ -20,7 +20,7 @@
       z-index: 999;
       border-radius: 1rem;
 
-      animation: navLine 0.25s ease-out 0.15s forwards;
+      animation: navLine 0.3s ease-out 0.5s forwards;
       @keyframes navLine {
         to {
           width: calc((420px * 100%) / 1440px);
@@ -101,19 +101,21 @@
 }
 
 .main-nav {
-  background-color: transparent;
+  background-color: map-get($all_colors, primary, 600);
+  backdrop-filter: blur(81px);
+  -webkit-backdrop-filter: blur(81px);
 
   width: var(--main-nav-width);
   height: var(--main-nav-height);
 
   border-radius: 0.6rem;
-  transition: all var(--base-transition-duration) ease-in-out;
-  animation: navbg 2.5s ease-out 0.2s forwards;
+  position: relative;
+  transform: translateX(100%);
+  animation: navbg 0.3s ease-out 0.5s forwards;
+
   @keyframes navbg {
     to {
-      background-color: map-get($all_colors, primary, 600);
-      backdrop-filter: blur(81px);
-      -webkit-backdrop-filter: blur(81px);
+      transform: translateX(0%);
     }
   }
 

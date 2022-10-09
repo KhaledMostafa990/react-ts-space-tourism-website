@@ -21,24 +21,33 @@ export function MainNav({
 
   const listVariant = {
     hidden: {
-      opacity: 0,
+      x: -35,
+      y: -25,
       transition: {
-        // when: 'afterChildren',
+        when: 'afterChildren',
       },
     },
 
     visible: {
-      opacity: 1,
+      y: 0,
+      x: 0,
       transition: {
         when: 'beforeChildren',
-        staggerChildren: 0.12,
+        staggerChildren: 0.3,
       },
     },
   };
 
   const itemVariant = {
     hidden: { opacity: 0, y: -25, x: -35 },
-    visible: { opacity: 1, y: 0, x: 0 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      x: 0,
+      transition: {
+        duration: 0.35,
+      },
+    },
   };
   return (
     <nav
@@ -56,14 +65,14 @@ export function MainNav({
       >
         {items.map((item: string, idx: number) => (
           <motion.li
-            variants={itemVariant}
-            key={item}
             className={`
-            main-nav__item flex align-center md-justify-center 
-            ${activeExample(item)}
-            ${currentActivePath(item)}`}
+          main-nav__item flex align-center md-justify-center 
+          ${activeExample(item)}
+          ${currentActivePath(item)}`}
+            key={item}
             onClick={clickHandler}
             ref={pathname === item.slice(1) ? itemRef : undefined}
+            variants={itemVariant}
           >
             <Link
               to={item[0] === '.' ? `${item}` : ''}
