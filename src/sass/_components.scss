@@ -110,20 +110,14 @@
 
   border-radius: 0.6rem;
   position: relative;
-  transform: translateX(100%);
-  animation: navbg 0.3s ease-out 0.5s forwards;
-
-  @keyframes navbg {
-    to {
-      transform: translateX(0%);
-    }
-  }
+  transition: all var(--base-transition-duration) ease-out;
 
   &:not(&-example) {
     position: fixed;
     right: -80%;
     top: 0;
     opacity: 0.2;
+
     &.active {
       opacity: 1;
       right: 0;
@@ -141,6 +135,13 @@
 
   @include lg {
     width: calc(var(--main-nav-width) - 5%);
+    transform: translateX(100%);
+    animation: navbg 0.3s ease-out 0.5s forwards;
+    @keyframes navbg {
+      to {
+        transform: translateX(0%);
+      }
+    }
   }
 
   @include xl {

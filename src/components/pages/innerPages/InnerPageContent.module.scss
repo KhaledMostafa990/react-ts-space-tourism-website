@@ -47,14 +47,23 @@
 }
 
 .innerpage {
+  min-height: 100vh;
+  max-height: max-content;
+
+  @include lg {
+    min-height: 100vh;
+    max-height: 100%;
+  }
+
   &--destinations,
   &--crew,
   &--technology {
     min-height: 100vh;
+    max-height: max-content;
 
     @include lg {
-      max-height: 100vh;
-      height: 100vh;
+      min-height: 100vh;
+      max-height: 100%;
     }
 
     overflow: hidden;
@@ -75,17 +84,31 @@
     }
 
     &__tab-img-wrapper {
+      min-width: 170px;
+      min-height: 170px;
       img {
         width: 170px;
         height: auto;
-        @include md {
+      }
+      @include md {
+        min-width: 300px;
+        min-height: 300px;
+        img {
           width: 300px;
         }
-        @include lg {
+      }
+      @include lg {
+        min-width: 375px;
+        min-height: 375px;
+        img {
           width: 375px;
         }
+      }
 
-        @include xl {
+      @include xl {
+        min-width: 375px;
+        min-height: 445px;
+        img {
           width: 445px;
         }
       }
@@ -139,6 +162,7 @@
     }
 
     &__tab-content {
+      max-height: min-content;
       @include md {
         flex-direction: column-reverse;
       }
@@ -147,20 +171,22 @@
         flex-direction: row-reverse;
       }
     }
-
     &__tab-img-wrapper {
+      min-width: 177px;
+      min-height: 220px;
+      max-height: min-content;
       img {
         width: 177px;
         height: 220px;
-        position: relative;
-        left: 1.25rem;
-        @include md {
+        filter: drop-shadow(6px 10px 6px rgba(0, 0, 0, 0.25));
+      }
+      @include md {
+        min-width: 400px;
+        min-height: 450px;
+
+        img {
           width: 400px;
-          height: 500px;
-        }
-        @include lg {
-          width: 450px;
-          height: 500px;
+          height: 450px;
         }
       }
     }
@@ -209,22 +235,38 @@
     }
 
     &__tab-img-wrapper {
-      width: 100%;
       justify-content: flex-end;
+      width: 100%;
+      min-width: 100%;
+      min-height: 200px;
+
+      @include xs {
+        min-height: 320px;
+      }
+
+      @include md {
+        min-height: 400px;
+      }
+
       img {
         width: 100%;
-        height: auto;
-        @include lg {
-          width: 400px;
-        }
-
-        @include xl {
-          width: 515px;
-        }
       }
 
       @include lg {
-        width: unset;
+        min-width: 400px;
+        min-height: 380px;
+
+        img {
+          width: 400px;
+        }
+      }
+
+      @include xl {
+        min-width: 515px;
+        min-height: 350px;
+        img {
+          width: 515px;
+        }
       }
     }
 
