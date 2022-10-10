@@ -24,18 +24,25 @@ export default function Home() {
 
   const item = {
     hidden: { opacity: 0, x: -50 },
-    visible: { opacity: 1, x: 0 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.3,
+        delay: 0.15,
+      },
+    },
   };
 
   const btnVariant = {
-    hidden: { opacity: 0, y: 150, scale: 0.45 },
+    hidden: { opacity: 0, y: 150, scale: 0.77 },
     visible: {
       scale: 1,
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.35,
-        delay: 0.5,
+        duration: 0.3,
+        delay: 0.15,
       },
     },
   };
